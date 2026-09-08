@@ -31,3 +31,22 @@
     order: unset;
   }
 }
+
+/* WKND featured teaser: grey text panel beside the image, smaller body copy */
+.columns.featured > div {
+  gap: 0;
+  align-items: stretch;
+}
+
+.columns.featured > div > div:not(.columns-img-col) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--light-color);
+  padding: 40px 32px;
+  font-size: var(--body-font-size-xs);
+}
+
+.columns.featured > div > div:not(.columns-img-col) p {
+  font-size: var(--body-font-size-xs);
+}

@@ -60,6 +60,8 @@ export default function parse(element, { document }) {
 
   const cells = [row];
 
-  const block = WebImporter.Blocks.createBlock(document, { name: 'columns', cells });
+  // Featured teaser gets a variant so CSS can render the WKND grey text panel.
+  const name = isFeatured ? 'columns (featured)' : 'columns';
+  const block = WebImporter.Blocks.createBlock(document, { name, cells });
   element.replaceWith(block);
 }
