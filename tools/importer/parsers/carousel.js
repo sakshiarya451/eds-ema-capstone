@@ -38,7 +38,17 @@ export default function parse(element, { document }) {
     const textCell = [];
     if (title) textCell.push(title);
     if (description) textCell.push(description);
-    textCell.push(...ctaLinks);
+    // Wrap each CTA link in <strong><em> so EDS decorateButtons renders it as the
+    // accent (WKND yellow) call-to-action button. A bare <a> stays a plain link.
+    ctaLinks.forEach((a) => {
+      const strong = document.createElement('strong');
+      const em = document.createElement('em');
+      em.append(a.cloneNode(true));
+      strong.append(em);
+      const p = document.createElement('p');
+      p.append(strong);
+      textCell.push(p);
+    });
 
     cells.push([image || '', textCell]);
   });

@@ -31,7 +31,17 @@ export default function parse(element, { document }) {
   if (eyebrow) textCell.push(eyebrow);
   if (heading) textCell.push(heading);
   if (description) textCell.push(description);
-  textCell.push(...ctaLinks);
+  // Wrap each CTA link in <strong><em> so EDS decorateButtons renders it as the
+  // accent (WKND yellow) call-to-action button. A bare <a> stays a plain link.
+  ctaLinks.forEach((a) => {
+    const strong = document.createElement('strong');
+    const em = document.createElement('em');
+    em.append(a.cloneNode(true));
+    strong.append(em);
+    const p = document.createElement('p');
+    p.append(strong);
+    textCell.push(p);
+  });
 
   // Empty-block guard.
   if (!textCell.length && !image) {
