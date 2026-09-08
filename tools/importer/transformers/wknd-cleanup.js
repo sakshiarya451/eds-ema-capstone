@@ -57,5 +57,25 @@ export default function transform(hookName, element, payload) {
     element.querySelectorAll('[data-cmp-hook-image]').forEach((el) => {
       el.removeAttribute('data-cmp-hook-image');
     });
+
+    // Standalone list CTAs ("All Articles", "All Trips") are default content
+    // (not produced by a block parser). In the SOURCE they are AEM buttons
+    // (a.cmp-button), still present at afterTransform time. Wrap each in
+    // <strong><em> so EDS decorateButtons renders it as the WKND yellow accent
+    // button (md conversion turns this into ***[text](href)***). Idempotent:
+    // skip anchors already wrapped.
+    const doc = element.ownerDocument;
+    element.querySelectorAll('a.cmp-button[href]').forEach((a) => {
+      if (a.closest('strong') || a.closest('em')) return; // already wrapped
+      // normalize the label: source nests text in <span class="cmp-button__text">
+      const label = a.textContent.trim();
+      if (!label) return;
+      a.textContent = label;
+      const strong = doc.createElement('strong');
+      const em = doc.createElement('em');
+      em.append(a.cloneNode(true));
+      strong.append(em);
+      a.replaceWith(strong);
+    });
   }
 }

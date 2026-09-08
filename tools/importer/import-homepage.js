@@ -133,6 +133,23 @@ export default {
     const hr = document.createElement('hr');
     main.appendChild(hr);
     WebImporter.rules.createMetadata(main, document);
+    // Add a Template metadata row so query-index can classify pages
+    // (e.g. dynamic listing filters magazine vs adventure vs homepage).
+    // createMetadata appends a block TABLE (first cell "Metadata") to main —
+    // find it and append a [Template | <name>] row.
+    const metaTable = [...main.querySelectorAll('table')].find((t) => {
+      const first = t.querySelector('tr td, tr th');
+      return first && /^metadata$/i.test(first.textContent.trim());
+    });
+    if (metaTable) {
+      const tr = document.createElement('tr');
+      const k = document.createElement('td');
+      k.textContent = 'Template';
+      const v = document.createElement('td');
+      v.textContent = PAGE_TEMPLATE.name;
+      tr.append(k, v);
+      (metaTable.querySelector('tbody') || metaTable).append(tr);
+    }
     WebImporter.rules.transformBackgroundImages(main, document);
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
 
