@@ -1,3 +1,7 @@
+.carousel {
+  position: relative;
+}
+
 .carousel .carousel-slides-container {
   position: relative;
 }
@@ -29,7 +33,7 @@
   justify-content: flex-end;
   position: relative;
   width: 100%;
-  min-height: min(42vw, 520px);
+  min-height: min(46vw, 560px);
 }
 
 .carousel .carousel-slide:has(.carousel-slide-content[data-align='center']) {
@@ -51,38 +55,45 @@
   object-fit: cover;
 }
 
-/* WKND: white panel overlapping the bottom of the image, dark text (not a dark overlay) */
+/* WKND: wide white panel anchored to the bottom of the image, dark text */
 .carousel .carousel-slide .carousel-slide-content {
   z-index: 1;
-  margin: 0 0 44px;
-  padding: 24px 28px;
+  margin: 0;
+  padding: 32px 40px 40px;
   color: var(--text-color);
   background-color: var(--background-color);
   position: relative;
-  width: var(--slide-content-width, auto);
+  width: var(--slide-content-width, 92%);
+  align-self: flex-start;
 }
 
 .carousel .carousel-slide .carousel-slide-content a.button.accent {
   margin-top: 8px;
 }
 
+/* WKND: dots overlaid bottom-center over the image (not a grey strip below) */
 .carousel .carousel-slide-indicators {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 6px 12px;
-  padding: 12px;
-  background-color: var(--light-color);
+  padding: 0;
+  background-color: transparent;
   line-height: 0;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  z-index: 2;
 }
 
 .carousel .carousel-slide-indicator button {
-  width: 24px;
-  height: 24px;
+  width: 12px;
+  height: 12px;
   margin: 0;
   padding: 0;
   border-radius: 50%;
-  background-color: #dadada;
+  background-color: #afafaf;
   transition: background-color 0.2s;
 }
 
@@ -92,33 +103,33 @@
   background-color: var(--text-color);
 }
 
+/* WKND: prev/next arrows at bottom-right, over the image */
 .carousel .carousel-navigation-buttons {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 12px;
-  right: 12px;
+  inset: auto 16px 12px auto;
+  transform: none;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  z-index: 1;
+  gap: 24px;
+  z-index: 2;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
 .carousel .carousel-navigation-buttons button {
   position: relative;
-  width: 44px;
-  height: 44px;
+  width: 32px;
+  height: 32px;
   margin: 0;
-  border-radius: 50%;
+  border-radius: 0;
   padding: 0;
-  background-color: rgb(32 32 32 / 25%);
-  transition: background-color 0.2s;
+  background-color: transparent;
+  transition: opacity 0.2s;
 }
 
 .carousel .carousel-navigation-buttons button:hover,
 .carousel .carousel-navigation-buttons button:focus-visible {
-  background-color: rgb(32 32 32 / 75%);
+  background-color: transparent;
+  opacity: 0.6;
 }
 
 .carousel .carousel-navigation-buttons button::after {
@@ -142,17 +153,13 @@
 
 @media (width >= 600px) {
   .carousel .carousel-navigation-buttons {
-    left: 24px;
     right: 24px;
   }
 
+  /* Panel spans a wide left-anchored band over the image bottom, like WKND */
   .carousel .carousel-slide .carousel-slide-content {
-    --slide-content-width: calc((100% - 184px) / 2);
+    --slide-content-width: 76%;
 
-    margin: 92px;
-  }
-
-  .carousel .carousel-slide .carousel-slide-content[data-align='justify'] {
-    --slide-content-width: auto;
+    margin: 0;
   }
 }
