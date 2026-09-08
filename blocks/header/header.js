@@ -124,14 +124,15 @@ export default async function decorate(block) {
   nav.id = 'nav';
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
-  const classes = ['brand', 'sections', 'tools'];
+  // nav.md sections, in order: brand | sections (menu) | tools (search) | utility
+  const classes = ['brand', 'sections', 'tools', 'utility'];
   classes.forEach((c, i) => {
     const section = nav.children[i];
     if (section) section.classList.add(`nav-${c}`);
   });
 
   const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand.querySelector('.button');
+  const brandLink = navBrand && navBrand.querySelector('.button');
   if (brandLink) {
     brandLink.className = '';
     brandLink.closest('.button-container').className = '';
@@ -151,6 +152,26 @@ export default async function decorate(block) {
     });
   }
 
+  // Build a functional search input from the "Search" link in the tools section.
+  // Content-first: the fragment carries the "Search" label; the input is built here.
+  const navTools = nav.querySelector('.nav-tools');
+  if (navTools) {
+    const searchLink = [...navTools.querySelectorAll('a')].find((a) => /search/i.test(a.textContent));
+    if (searchLink) {
+      const form = document.createElement('form');
+      form.className = 'nav-search';
+      form.setAttribute('role', 'search');
+      form.action = '/us/en/search';
+      form.innerHTML = `
+        <span class="nav-search-icon" aria-hidden="true"></span>
+        <input type="search" name="q" aria-label="Search" placeholder="Search">
+      `;
+      searchLink.closest('p, li')?.replaceWith(form);
+      // if the link sat in a bare wrapper, ensure the form is in the tools section
+      if (!navTools.contains(form)) navTools.append(form);
+    }
+  }
+
   // hamburger for mobile
   const hamburger = document.createElement('div');
   hamburger.classList.add('nav-hamburger');
@@ -164,8 +185,23 @@ export default async function decorate(block) {
   toggleMenu(nav, navSections, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
 
+  // Two-tier layout: a dark utility top bar above the white main row.
+  // The utility section (sign-in + locale) moves into the top bar; brand + menu
+  // + search stay in the main row.
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
+
+  const navUtility = nav.querySelector('.nav-utility');
+  if (navUtility) {
+    const topBar = document.createElement('div');
+    topBar.className = 'nav-utility-bar';
+    const topBarInner = document.createElement('div');
+    topBarInner.className = 'nav-utility-inner';
+    topBarInner.append(navUtility);
+    topBar.append(topBarInner);
+    navWrapper.append(topBar);
+  }
+
   navWrapper.append(nav);
   block.append(navWrapper);
 }

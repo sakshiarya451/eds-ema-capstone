@@ -6,6 +6,51 @@ header .nav-wrapper {
   position: fixed;
 }
 
+/* WKND two-tier: dark utility top bar */
+header .nav-utility-bar {
+  background-color: #202020;
+  color: #ebebeb;
+  min-height: 25px;
+  font-size: var(--body-font-size-xs);
+}
+
+header .nav-utility-inner {
+  max-width: 1164px;
+  margin: 0 auto;
+  padding: 2px 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+header .nav-utility ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  text-transform: uppercase;
+}
+
+header .nav-utility li {
+  margin: 0;
+}
+
+header .nav-utility a:any-link {
+  color: #ebebeb;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+header .nav-utility a img {
+  width: 20px;
+  height: auto;
+  vertical-align: middle;
+}
+
 header nav {
   box-sizing: border-box;
   display: grid;
@@ -15,7 +60,7 @@ header nav {
   align-items: center;
   gap: 0 24px;
   margin: auto;
-  max-width: 1248px;
+  max-width: 1164px;
   height: var(--nav-height);
   padding: 0 24px;
   font-family: var(--body-font-family);
@@ -37,10 +82,11 @@ header nav[aria-expanded='true'] {
 
   header nav {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: flex-start;
     gap: 0 32px;
-    max-width: 1264px;
-    padding: 0 32px;
+    max-width: 1164px;
+    padding: 0 24px;
   }
 
   header nav[aria-expanded='true'] {
@@ -54,6 +100,7 @@ header nav p {
   line-height: 1;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 header nav a:any-link {
   color: currentcolor;
 }
@@ -188,7 +235,7 @@ header nav .nav-sections ul > li > ul > li {
 @media (width >= 900px) {
   header nav .nav-sections {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     flex: 1 1 auto;
     visibility: visible;
     white-space: nowrap;
@@ -235,6 +282,18 @@ header nav .nav-sections ul > li > ul > li {
     position: relative;
     text-transform: uppercase;
     letter-spacing: 0.02em;
+    font-size: var(--body-font-size-xs);
+  }
+
+  /* WKND: nav link padding + yellow hover */
+  header nav .nav-sections .default-content-wrapper > ul > li > a {
+    display: block;
+    padding: 8px 12px;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li > a:hover,
+  header nav .nav-sections .default-content-wrapper > ul > li > a:focus-visible {
+    background-color: var(--accent-color);
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul {
@@ -270,32 +329,52 @@ header nav .nav-sections ul > li > ul > li {
   }
 }
 
-/* tools (search / locale / sign-in) */
+/* tools — holds the search input (far right of the main row) */
 header nav .nav-tools {
   grid-area: tools;
-}
-
-/* WKND: horizontal, right-aligned utilities — no bullet list */
-/* stylelint-disable-next-line no-descending-specificity */
-header nav .nav-tools ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
   display: flex;
   align-items: center;
-  gap: 24px;
+}
+
+/* WKND search: grey field, magnifier icon on the left, uppercase placeholder */
+header .nav-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+header .nav-search .nav-search-icon {
+  position: absolute;
+  left: 10px;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  background-color: var(--text-color);
+
+  /* stylelint-disable-next-line property-no-vendor-prefix -- Safari still needs -webkit-mask */
+  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>') center / contain no-repeat;
+  mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>') center / contain no-repeat;
+}
+
+header .nav-search input {
+  height: 36px;
+  width: 180px;
+  border: 1px solid transparent;
+  border-radius: 0;
+  background-color: #ebebeb;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
   font-size: var(--body-font-size-xs);
+  padding: 0 12px 0 32px;
+}
+
+header .nav-search input::placeholder {
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  color: #767676;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
-header nav .nav-tools ul > li {
-  margin: 0;
-}
-
-header nav .nav-tools a:any-link {
-  color: currentcolor;
-  text-decoration: none;
-  white-space: nowrap;
+header .nav-search input:focus {
+  outline: none;
+  background-color: var(--background-color);
+  border-color: var(--text-color);
 }
