@@ -363,3 +363,15 @@ main .section.highlight {
   margin: 0;
   padding: var(--spacing-xl) 0;
 }
+
+/* WKND listing pages: standalone section-title h2s get a short yellow accent
+   bar beneath (84px x 2px). Targets a lone default-content h2 (a title
+   component alone) — not teaser groups (2 h2s) or in-block headings. */
+body.magazine-listing main .default-content-wrapper h2:only-of-type::after,
+body.adventures-listing main .default-content-wrapper h2:only-of-type::after {
+  content: '';
+  display: block;
+  width: 84px;
+  margin-top: 12px;
+  border-bottom: 2px solid var(--accent-color);
+}
