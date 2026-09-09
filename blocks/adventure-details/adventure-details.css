@@ -6,9 +6,9 @@
 }
 
 .adventure-details .adventure-details-list dt {
-  margin-top: 24px;
-  padding-left: 16px;
-  border-left: 2px solid var(--accent-color);
+  margin-top: 28px;
+  padding: 4px 0 0 16px;
+  border-left: 2px solid var(--border-color, #ebebeb);
   font-size: var(--body-font-size-xs);
   font-weight: 600;
   text-transform: uppercase;
@@ -20,10 +20,11 @@
   margin-top: 0;
 }
 
+/* value shares the same grey bar as its label — no break between them */
 .adventure-details .adventure-details-list dd {
-  margin: 6px 0 0;
-  padding-left: 16px;
-  border-left: 2px solid var(--accent-color);
+  margin: 0;
+  padding: 6px 0 4px 16px;
+  border-left: 2px solid var(--border-color, #ebebeb);
   font-size: var(--body-font-size-s);
   font-weight: 600;
   text-transform: uppercase;
@@ -44,24 +45,19 @@
     padding: 0 var(--spacing-l);
   }
 
-  /* Specs form the left sidebar spanning the full height of the section */
+  /* Specs sidebar (left column, top-aligned under the title) */
   main .section.two-col > .adventure-details-wrapper {
     grid-column: 1;
-    grid-row: 1 / span 99;
+    grid-row: 1;
+    margin: 0;
   }
 
-  /* Right column fills top-down: share heading then tabs (tabs at the top,
-     aligned with the specs — no gap above them) */
-  main .section.two-col > .default-content-wrapper,
-  main .section.two-col > .tabs-wrapper {
-    grid-column: 2;
-  }
-
-  /* keep the "Share this Adventure" heading left-aligned + subtle above tabs */
+  /* Tabs fill the right column, top-aligned with the specs */
+  main .section.two-col > .tabs-wrapper,
   main .section.two-col > .default-content-wrapper {
-    text-align: left;
-    font-size: var(--body-font-size-xs);
-    margin-bottom: 8px;
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
   }
 }
 
