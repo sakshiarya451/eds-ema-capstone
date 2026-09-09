@@ -332,6 +332,7 @@ header nav .nav-sections ul > li > ul > li {
   header nav .nav-sections .default-content-wrapper > ul > li > a:hover,
   header nav .nav-sections .default-content-wrapper > ul > li > a:focus-visible {
     background-color: var(--accent-color);
+    text-decoration: none;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul {
