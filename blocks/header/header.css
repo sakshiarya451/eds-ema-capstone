@@ -92,6 +92,17 @@ header nav[aria-expanded='true'] {
 }
 
 @media (width >= 900px) {
+  /* Sticky header on scroll (matches WKND). The header-wrapper element is the
+     top-level flow child under <body>, so making IT sticky pins the whole bar
+     to the viewport; auto height lets it hold the full ~194px two-tier header
+     (the boilerplate's fixed 64px height would otherwise clip the sticky). */
+  header.header-wrapper {
+    position: sticky;
+    top: 0;
+    height: auto;
+    z-index: 2;
+  }
+
   header .nav-wrapper {
     position: relative;
   }
