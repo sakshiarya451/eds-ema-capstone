@@ -1,13 +1,12 @@
-/* WKND adventure specs: stacked label-above-value with a left accent bar,
-   listed vertically (sidebar column). */
+/* WKND adventure specs: stacked label-above-value groups, each with a
+   continuous left accent bar. Label sits tight above its value; space is
+   between spec groups, not between a label and its own value. */
 .adventure-details .adventure-details-list {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
   margin: 0;
 }
 
 .adventure-details .adventure-details-list dt {
+  margin-top: 24px;
   padding-left: 16px;
   border-left: 2px solid var(--accent-color);
   font-size: var(--body-font-size-xs);
@@ -17,11 +16,15 @@
   color: #767676;
 }
 
+.adventure-details .adventure-details-list dt:first-child {
+  margin-top: 0;
+}
+
 .adventure-details .adventure-details-list dd {
-  margin: 4px 0 0;
+  margin: 6px 0 0;
   padding-left: 16px;
   border-left: 2px solid var(--accent-color);
-  font-size: var(--body-font-size-m);
+  font-size: var(--body-font-size-s);
   font-weight: 600;
   text-transform: uppercase;
   color: var(--text-color);
