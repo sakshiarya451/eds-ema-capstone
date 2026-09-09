@@ -53,5 +53,12 @@
   main .section.two-col > .tabs-wrapper {
     grid-column: 2;
   }
+
+  /* keep the "Share this Adventure" heading left-aligned + subtle above tabs */
+  main .section.two-col > .default-content-wrapper {
+    text-align: left;
+    font-size: var(--body-font-size-xs);
+    margin-bottom: 8px;
+  }
 }
 

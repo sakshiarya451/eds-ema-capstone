@@ -69,6 +69,12 @@
   align-self: flex-start;
 }
 
+/* Hide the panel entirely when the slide has no text content (e.g. an
+   image-only adventure hero carousel) — WKND shows just the image there. */
+.carousel .carousel-slide .carousel-slide-content:not(:has(h1, h2, h3, h4, h5, h6, p, a, ul, ol)) {
+  display: none;
+}
+
 .carousel .carousel-slide .carousel-slide-content a.button.accent {
   margin-top: 8px;
 }
