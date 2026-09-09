@@ -92,6 +92,17 @@ header nav[aria-expanded='true'] {
 }
 
 @media (width >= 900px) {
+  /* Sticky header on scroll (matches WKND). The header-wrapper element is the
+     top-level flow child under <body>, so making IT sticky pins the whole bar
+     to the viewport; auto height lets it hold the full ~194px two-tier header
+     (the boilerplate's fixed 64px height would otherwise clip the sticky). */
+  header.header-wrapper {
+    position: sticky;
+    top: 0;
+    height: auto;
+    z-index: 2;
+  }
+
   header .nav-wrapper {
     position: relative;
   }
@@ -100,7 +111,7 @@ header nav[aria-expanded='true'] {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 0 32px;
+    gap: 0 14px;
 
     /* WKND main row: 1164 max-width, 14px side padding, 50px top/bottom pad
        (measured height ~169px). */
@@ -296,7 +307,11 @@ header nav .nav-sections ul > li > ul > li {
 
   header nav .nav-sections ul {
     display: flex;
-    gap: 40px;
+
+    /* WKND right-aligns the link group so it hugs the search box; links sit
+       adjacent (no gap) — their 17px link padding provides the spacing. */
+    justify-content: flex-end;
+    gap: 0;
     margin: 0;
   }
 
@@ -311,7 +326,7 @@ header nav .nav-sections ul > li > ul > li {
   /* WKND: nav link padding + yellow hover */
   header nav .nav-sections .default-content-wrapper > ul > li > a {
     display: block;
-    padding: 8px 12px;
+    padding: 15px 17px;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > a:hover,
@@ -357,6 +372,15 @@ header nav .nav-tools {
   grid-area: tools;
   display: flex;
   align-items: center;
+}
+
+/* strip the browser-default <ul> padding/margin around the search so it sits
+   flush to the right of the nav links (WKND: ~14px gap to the last link). */
+/* stylelint-disable-next-line no-descending-specificity */
+header nav .nav-tools ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 /* WKND search: grey field, magnifier icon on the left, uppercase placeholder */
