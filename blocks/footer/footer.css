@@ -1,5 +1,7 @@
 /* WKND footer — dark bar, light text (measured from wknd.site):
-   bg #202020, text #ebebeb, 18px base, padding 16px 0 24px, margin-top 48px */
+   bg #202020, text #ebebeb, Source Sans Pro, margin-top 48px.
+   Layout (desktop): a top row split logo | nav | Follow Us | social,
+   then a full-width legal/copyright row beneath. */
 footer {
   background-color: #202020;
   color: #ebebeb;
@@ -62,7 +64,7 @@ footer .footer-nav ul li a {
 
 /* --- Follow Us + social --- */
 footer .footer-social h4 {
-  margin: 24px 0 12px;
+  margin: 0 0 12px;
   font-family: var(--body-font-family);
   font-size: var(--body-font-size-s);
   font-weight: 600;
@@ -91,7 +93,6 @@ footer .footer-social ul li a {
 
 /* --- Legal / copyright --- */
 footer .footer-legal {
-  margin-top: 24px;
   font-size: var(--body-font-size-xs);
   line-height: 1.4;
   color: #f7f7f7;
@@ -101,7 +102,54 @@ footer .footer-legal p {
   margin: 0 0 12px;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 footer .footer-legal a:any-link {
   color: #ebebeb;
   text-decoration: underline;
+}
+
+/* Desktop: top row = logo | nav | Follow Us | social (matches WKND grid);
+   legal spans full width beneath. */
+@media (width >= 900px) {
+  footer .footer {
+    display: grid;
+    grid-template-columns: 2fr 6fr 2fr 2fr;
+    column-gap: 24px;
+    align-items: start;
+  }
+
+  footer .footer-brand {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  footer .footer-nav {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  footer .footer-social {
+    grid-column: 3 / span 2;
+    grid-row: 1;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  footer .footer-social h4 {
+    margin: 0;
+  }
+
+  footer .footer-legal {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: 24px;
+  }
+
+  /* nav horizontal on desktop */
+  footer .footer-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 34px;
+  }
 }
