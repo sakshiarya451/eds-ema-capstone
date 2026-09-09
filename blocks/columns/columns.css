@@ -65,7 +65,7 @@
   width: 100%;
   max-width: 1136px;
   margin: -180px auto 0;
-  padding: 28px;
+  padding: 0 28px;
   background-color: var(--background-color);
 }
 
