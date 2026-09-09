@@ -51,6 +51,7 @@ footer .footer-nav ul li {
   margin: 0;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 footer .footer-nav ul li a {
   display: inline-block;
   padding: 8px 0;
@@ -81,6 +82,7 @@ footer .footer-social ul li {
   margin: 0;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 footer .footer-social ul li a {
   text-transform: uppercase;
   font-size: var(--body-font-size-xs);
