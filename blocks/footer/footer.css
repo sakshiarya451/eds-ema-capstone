@@ -77,18 +77,33 @@ footer .footer-social ul {
   margin: 0;
   padding: 0;
   display: flex;
-  gap: 16px;
+  gap: 8px;
 }
 
 footer .footer-social ul li {
   margin: 0;
 }
 
+/* Icon links: 48x48 light box with a dark brand glyph (matches WKND) */
 /* stylelint-disable-next-line no-descending-specificity */
-footer .footer-social ul li a {
-  text-transform: uppercase;
-  font-size: var(--body-font-size-xs);
-  letter-spacing: 0.02em;
+footer .footer-social a.footer-social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: #ebebeb;
+}
+
+footer .footer-social a.footer-social-icon:hover {
+  text-decoration: none;
+  background-color: #fff;
+}
+
+footer .footer-social a.footer-social-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: #202020;
 }
 
 /* --- Legal / copyright --- */
