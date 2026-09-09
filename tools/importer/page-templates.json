@@ -69,8 +69,21 @@
         "https://wknd.site/us/en/adventures.html"
       ],
       "representativeUrl": "https://wknd.site/us/en/adventures.html",
-      "description": "To be named in naming step",
-      "blocks": [],
+      "description": "Adventures listing: title, intro columns, dynamic filterable adventure cards (query-index, template=adventure-detail)",
+      "blocks": [
+        {
+          "name": "columns",
+          "instances": [
+            "main div.teaser.cmp-teaser--hero"
+          ]
+        },
+        {
+          "name": "cards",
+          "instances": [
+            "dynamic: query-index.json template=adventure-detail (cards.adventures)"
+          ]
+        }
+      ],
       "coverageGaps": [],
       "urlPattern": "/us/en/*"
     },

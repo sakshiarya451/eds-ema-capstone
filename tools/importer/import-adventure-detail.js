@@ -85,6 +85,20 @@ export default {
 
     const main = document.body;
 
+    // Capture the adventure Activity from the SOURCE DOM before any block
+    // parsing replaces it. WKND puts it in a content-fragment element titled
+    // "Activity" (.cmp-contentfragment__element). Used for page metadata below.
+    let activityValue = '';
+    const cfElements = [...document.querySelectorAll('.cmp-contentfragment__element')];
+    const activityEl = cfElements.find((el) => {
+      const t = el.querySelector('.cmp-contentfragment__element-title, dt');
+      return t && /^activity$/i.test(t.textContent.trim());
+    });
+    if (activityEl) {
+      const v = activityEl.querySelector('.cmp-contentfragment__element-value, dd');
+      if (v) activityValue = v.textContent.trim();
+    }
+
     // 1. beforeTransform (drops global header/footer + chrome)
     executeTransformers('beforeTransform', main, payload);
 
@@ -119,13 +133,23 @@ export default {
       return first && /^metadata$/i.test(first.textContent.trim());
     });
     if (metaTable) {
-      const tr = document.createElement('tr');
-      const k = document.createElement('td');
-      k.textContent = 'Template';
-      const v = document.createElement('td');
-      v.textContent = PAGE_TEMPLATE.name;
-      tr.append(k, v);
-      (metaTable.querySelector('tbody') || metaTable).append(tr);
+      const tbody = metaTable.querySelector('tbody') || metaTable;
+      const addMetaRow = (key, value) => {
+        if (!value) return;
+        const tr = document.createElement('tr');
+        const k = document.createElement('td');
+        k.textContent = key;
+        const v = document.createElement('td');
+        v.textContent = value;
+        tr.append(k, v);
+        tbody.append(tr);
+      };
+      addMetaRow('Template', PAGE_TEMPLATE.name);
+      // Surface the adventure's Activity (Climbing/Cycling/Skiing/Surfing/…) into
+      // page metadata so query-index.json carries an `activity` field the
+      // adventures-listing filter tabs can read. Captured from the source DOM
+      // above, before block parsing replaced the content fragment.
+      addMetaRow('Activity', activityValue);
     }
     WebImporter.rules.transformBackgroundImages(main, document);
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);

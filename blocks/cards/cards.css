@@ -25,3 +25,56 @@
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
+
+/* --- Dynamic adventures listing (cards.adventures) ---------------------
+   WKND filter tab row: uppercase labels; the active tab is white-on-dark. */
+.cards.adventures .cards-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 32px;
+}
+
+.cards.adventures .cards-tab {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  padding: 8px 16px;
+  background-color: transparent;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.cards.adventures .cards-tab[aria-selected='true'] {
+  background-color: var(--dark-color);
+  color: var(--background-color);
+}
+
+.cards.adventures .cards-tab:hover {
+  background-color: var(--accent-color);
+  color: var(--text-color);
+}
+
+/* Card title + description in the dynamic variant */
+.cards.adventures .cards-card-body h3 {
+  margin: 0 0 8px;
+  font-size: var(--heading-font-size-s);
+}
+
+.cards.adventures .cards-card-body h3 a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.cards.adventures .cards-card-body h3 a:hover {
+  text-decoration: underline;
+}
+
+.cards.adventures .cards-card-body p {
+  margin: 0;
+  font-size: var(--body-font-size-s);
+  line-height: 1.5;
+}
