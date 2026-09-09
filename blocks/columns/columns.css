@@ -58,12 +58,19 @@
   object-fit: cover;
 }
 
-/* row 2: white content box overlapping the bottom of the image */
+/* row 2: white content box overlapping the bottom of the image. WKND fixes
+   the box to 180px and pulls it up 180px, so its bottom edge sits exactly on
+   the image's bottom edge (content vertically centered within). */
 .columns.intro > div:last-child {
   position: relative;
   z-index: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 100%;
   max-width: 1136px;
+  height: 180px;
   margin: -180px auto 0;
   padding: 0 28px;
   background-color: var(--background-color);

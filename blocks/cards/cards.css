@@ -90,12 +90,13 @@
   color: var(--text-color);
 }
 
-/* Card title + description (WKND: Source Sans 18px; title is a link) */
+/* Card title (WKND: uppercase, Source Sans 18px, blue link) */
 .cards.adventures .cards-card-body h3 {
   margin: 0 0 8px;
   font-family: var(--body-font-family);
   font-size: var(--body-font-size-m);
   font-weight: 400;
+  text-transform: uppercase;
 }
 
 .cards.adventures .cards-card-body h3 a {
@@ -107,8 +108,12 @@
   text-decoration: underline;
 }
 
+/* Card description: WKND truncates to a single line with an ellipsis */
 .cards.adventures .cards-card-body p {
   margin: 0;
   font-size: var(--body-font-size-m);
   line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
