@@ -26,41 +26,49 @@
   object-fit: cover;
 }
 
-/* --- Dynamic adventures listing (cards.adventures) ---------------------
+/* --- Dynamic listing cards (cards.adventures / cards.magazine) ---------
    WKND cards have no border/background/radius; 4 per row on desktop, ~14px
-   column gap and 32px row gap; image is a 4:3 cover crop. */
-.cards.adventures > ul {
+   column gap and 32px row gap; image is a 4:3 cover crop. The adventures and
+   magazine listings share identical card styling. */
+.cards.adventures > ul,
+.cards.magazine > ul {
   /* minmax(0, 1fr) stops tracks from blowing out to the image's intrinsic
      width — otherwise each 1fr grows to the full-res image size. */
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 32px 14px;
 }
 
-.cards.adventures > ul > li {
+.cards.adventures > ul > li,
+.cards.magazine > ul > li {
   min-width: 0;
   border: 0;
   background-color: transparent;
 }
 
-.cards.adventures .cards-card-image {
+.cards.adventures .cards-card-image,
+.cards.magazine .cards-card-image {
   line-height: 0;
 }
 
 /* the image link + picture must fill the cell so the img can clamp to 100% */
 .cards.adventures .cards-card-image a,
-.cards.adventures .cards-card-image picture {
+.cards.adventures .cards-card-image picture,
+.cards.magazine .cards-card-image a,
+.cards.magazine .cards-card-image picture {
   display: block;
   width: 100%;
 }
 
-.cards.adventures .cards-card-image img {
+.cards.adventures .cards-card-image img,
+.cards.magazine .cards-card-image img {
   width: 100%;
   height: auto;
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
 
-.cards.adventures .cards-card-body {
+.cards.adventures .cards-card-body,
+.cards.magazine .cards-card-body {
   margin: 16px 0 0;
 }
 
@@ -102,7 +110,8 @@
 }
 
 /* Card title (WKND: uppercase, Source Sans 18px, blue link) */
-.cards.adventures .cards-card-body h3 {
+.cards.adventures .cards-card-body h3,
+.cards.magazine .cards-card-body h3 {
   margin: 0 0 8px;
   font-family: var(--body-font-family);
   font-size: var(--body-font-size-m);
@@ -110,17 +119,20 @@
   text-transform: uppercase;
 }
 
-.cards.adventures .cards-card-body h3 a {
+.cards.adventures .cards-card-body h3 a,
+.cards.magazine .cards-card-body h3 a {
   color: var(--link-color);
   text-decoration: none;
 }
 
-.cards.adventures .cards-card-body h3 a:hover {
+.cards.adventures .cards-card-body h3 a:hover,
+.cards.magazine .cards-card-body h3 a:hover {
   text-decoration: underline;
 }
 
 /* Card description: WKND truncates to a single line with an ellipsis */
-.cards.adventures .cards-card-body p {
+.cards.adventures .cards-card-body p,
+.cards.magazine .cards-card-body p {
   margin: 0;
   font-size: var(--body-font-size-m);
   line-height: 1.5;

@@ -127,6 +127,30 @@
       "urlPattern": "/us/en/magazine/*"
     },
     {
+      "name": "magazine-listing",
+      "urls": [
+        "https://wknd.site/us/en/magazine.html"
+      ],
+      "representativeUrl": "https://wknd.site/us/en/magazine.html",
+      "description": "Magazine listing: title, featured article (columns), dynamic article grid (cards.magazine, query-index template=magazine-article), members-only section",
+      "blocks": [
+        {
+          "name": "columns",
+          "instances": [
+            "main div.teaser.cmp-teaser--featured"
+          ]
+        },
+        {
+          "name": "cards",
+          "instances": [
+            "dynamic: query-index.json template=magazine-article (cards.magazine)"
+          ]
+        }
+      ],
+      "coverageGaps": [],
+      "urlPattern": "/us/en/magazine"
+    },
+    {
       "name": "homepage",
       "urls": [
         "https://wknd.site/us/en.html",

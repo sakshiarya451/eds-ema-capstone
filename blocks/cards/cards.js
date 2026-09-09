@@ -126,10 +126,41 @@ async function decorateAdventures(block) {
   applyFilter('All');
 }
 
+/**
+ * Dynamic magazine listing: fetch query-index.json, keep magazine-article
+ * pages, sort newest-first (lastModified desc), render as cards. No tabs.
+ */
+async function decorateMagazine(block) {
+  block.textContent = '';
+
+  let rows = [];
+  try {
+    const resp = await fetch('/query-index.json');
+    if (resp.ok) {
+      const json = await resp.json();
+      rows = (json.data || [])
+        .filter((r) => (r.template || '').trim() === 'magazine-article')
+        .sort((a, b) => Number(b.lastModified || 0) - Number(a.lastModified || 0));
+    }
+  } catch (e) {
+    rows = [];
+  }
+
+  const ul = document.createElement('ul');
+  rows.forEach((row) => ul.append(buildCard(row)));
+  block.append(ul);
+}
+
 export default function decorate(block) {
   // Dynamic variant: adventures listing driven by query-index.json.
   if (block.classList.contains('adventures')) {
     decorateAdventures(block);
+    return;
+  }
+
+  // Dynamic variant: magazine listing (newest-first article cards).
+  if (block.classList.contains('magazine')) {
+    decorateMagazine(block);
     return;
   }
 
