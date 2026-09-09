@@ -64,18 +64,35 @@ main .section:has(+ .section.two-col) h1::after {
     padding: 0 var(--spacing-l);
   }
 
-  /* Specs sidebar (left column, top-aligned under the title) */
+  /* Left column: specs (row 1) then the "Share this Adventure" heading (row 2),
+     matching WKND. Right column: tabs spanning both rows. */
   main .section.two-col > .adventure-details-wrapper {
     grid-column: 1;
     grid-row: 1;
     margin: 0;
   }
 
-  /* Tabs fill the right column, top-aligned with the specs */
-  main .section.two-col > .tabs-wrapper,
   main .section.two-col > .default-content-wrapper {
+    grid-column: 1;
+    grid-row: 2;
+    margin: 0;
+    align-self: start;
+  }
+
+  main .section.two-col > .tabs-wrapper {
     grid-column: 2;
-    grid-row: 1;
+    grid-row: 1 / span 2;
     margin: 0;
   }
+}
+
+/* "Share this Adventure" heading — WKND: 14px/600/#202020/uppercase */
+.adventure-details-container .default-content-wrapper h5,
+main .section.two-col .default-content-wrapper h5 {
+  margin: 23px 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+  text-transform: uppercase;
+  color: var(--text-color);
 }

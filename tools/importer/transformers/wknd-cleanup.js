@@ -50,14 +50,9 @@ export default function transform(hookName, element, payload) {
       'noscript',
     ]);
 
-    // "Share this Adventure" — WKND injects social share buttons here via JS
-    // (not migrated), leaving an orphan heading with nothing under it. WKND's
-    // own page shows no visible label, so drop it. Match the source component's
-    // stable id, with a text fallback.
-    element.querySelectorAll('#share-this-adventure, .cmp-sharing, [class*="sharing"]').forEach((el) => el.remove());
-    element.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach((h) => {
-      if (h.textContent.trim().toLowerCase() === 'share this adventure') h.remove();
-    });
+    // "Share this Adventure" (h5) is kept — WKND shows it in the left column
+    // below the specs. The non-functional JS-injected social buttons are not
+    // migrated, but the heading itself is real content and stays.
 
     // Strip AEM data-layer / analytics tracking attributes left on elements.
     element.querySelectorAll('[data-cmp-data-layer]').forEach((el) => {
