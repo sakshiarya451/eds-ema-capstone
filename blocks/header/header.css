@@ -17,7 +17,7 @@ header .nav-utility-bar {
 header .nav-utility-inner {
   max-width: 1164px;
   margin: 0 auto;
-  padding: 2px 24px;
+  padding: 2px 14px;
   display: flex;
   justify-content: flex-end;
 }
@@ -49,6 +49,18 @@ header .nav-utility a img {
   width: 20px;
   height: auto;
   vertical-align: middle;
+}
+
+/* Language selector (last utility link) carries a dropdown caret, like WKND. */
+header .nav-utility li:last-child a::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-left: 8px;
+  border: solid #ebebeb;
+  border-width: 0 2px 2px 0;
+  transform: translateY(-2px) rotate(45deg);
 }
 
 header nav {
@@ -85,9 +97,12 @@ header nav[aria-expanded='true'] {
     align-items: center;
     justify-content: flex-start;
     gap: 0 32px;
+
+    /* WKND main row: 1164 max-width, 14px side padding, 50px top/bottom pad
+       (measured height ~169px). */
     max-width: 1164px;
-    height: 90px;
-    padding: 0 24px;
+    height: auto;
+    padding: 50px 14px;
   }
 
   header nav[aria-expanded='true'] {
@@ -190,15 +205,16 @@ header nav[aria-expanded='true'] .nav-hamburger-icon::after {
 /* brand */
 header .nav-brand {
   grid-area: brand;
-  flex-basis: 160px;
+  flex-basis: 128px;
   font-size: var(--heading-font-size-s);
   font-weight: 700;
   line-height: 1;
 }
 
+/* WKND logo: 128px wide (natural 300x112 → ~48px tall) */
 header nav .nav-brand img {
-  width: 160px;
-  max-height: 56px;
+  width: 128px;
+  max-height: 48px;
   height: auto;
   object-fit: contain;
 }
