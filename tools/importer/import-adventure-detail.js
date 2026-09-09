@@ -35,7 +35,9 @@ const PAGE_TEMPLATE = {
   sections: [
     { id: 's1-breadcrumb', name: 'Breadcrumb', style: null, blocks: ['breadcrumbs'], defaultContent: [] },
     { id: 's2-carousel', name: 'Hero carousel', style: null, blocks: ['carousel'], defaultContent: [] },
-    { id: 's3-body', name: 'Adventure detail body', style: null, blocks: ['adventure-details', 'tabs'], defaultContent: [] },
+    // Isolate specs + tabs in their own section (style marker) so a 2-column
+    // grid targets ONLY these two blocks, never the rest of the page.
+    { id: 's3-body', name: 'Adventure detail body', style: 'two-col', selector: 'main div.contentfragment.cmp-contentfragment--elements', blocks: ['adventure-details', 'tabs'], defaultContent: [] },
   ],
 };
 
