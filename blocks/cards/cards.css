@@ -143,3 +143,92 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* --- Contributor / guide person cards (cards.contributors) -------------
+   About Us: 4 person cards per row, each centered with a circular 164px
+   avatar, serif name, uppercase role, and a row of dark social-icon boxes.
+   Measured from wknd.site: cards 235x318, avatar 164px circle, name Asar 24px,
+   role Source Sans 14px/600 uppercase, social 48x48 #202020 boxes w/ #ebebeb
+   glyph, icons adjacent (no gap). */
+.cards.contributors > ul {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 40px 56px;
+}
+
+.cards.contributors > ul > li {
+  min-width: 0;
+  border: 0;
+  background-color: transparent;
+  text-align: center;
+}
+
+.cards.contributors .cards-card-image {
+  line-height: 0;
+}
+
+/* Circular avatar, centered, 164px (WKND). */
+.cards.contributors .cards-card-image picture,
+.cards.contributors .cards-card-image img {
+  display: block;
+  width: 164px;
+  height: 164px;
+  margin: 0 auto;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.cards.contributors .cards-card-body {
+  margin: 20px 0 0;
+}
+
+/* Name: serif display face, 24px, dark. */
+.cards.contributors .cards-card-body h3 {
+  margin: 0 0 6px;
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-l);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+/* Role: Source Sans 14px, weight 600, UPPERCASE. */
+.cards.contributors .cards-card-body h5 {
+  margin: 0 0 16px;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+/* Social icon row: centered, icons adjacent (no gap). */
+.cards.contributors .cards-card-social {
+  display: flex;
+  justify-content: center;
+}
+
+.cards.contributors .cards-card-social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: var(--dark-color);
+}
+
+.cards.contributors .cards-card-social-icon:hover {
+  text-decoration: none;
+  background-color: #000;
+}
+
+.cards.contributors .cards-card-social-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--light-color);
+}
+
+@media (width < 900px) {
+  .cards.contributors > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
