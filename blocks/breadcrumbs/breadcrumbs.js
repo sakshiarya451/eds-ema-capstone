@@ -7,35 +7,42 @@
 const TITLE_CASE = (s) => s.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 
 /**
- * Build the ancestor trail from the current URL path when the authored trail
- * is missing parents. e.g. /us/en/adventures/bali-surf-camp →
- * [{Adventures, /us/en/adventures}]. Excludes the locale prefix and the
- * current page (added separately as the active crumb).
+ * Build the full breadcrumb trail deterministically from the URL path.
+ * e.g. /us/en/adventures/bali-surf-camp →
+ *   [{Adventures, /us/en/adventures}, {Bali Surf Camp, null (current)}].
+ * The locale prefix (first two segments, e.g. us/en) is excluded. The current
+ * page (last segment) is the active crumb with no link.
+ *
+ * The trail is derived from the path rather than the imported crumbs because
+ * the bulk-import md pipeline handles the source breadcrumb inconsistently
+ * (sometimes dropping the parent, sometimes duplicating it). The path is the
+ * single source of truth and is correct for every adventure page.
  */
-function ancestorsFromPath() {
+function trailFromPath(currentLabel) {
   const segs = window.location.pathname.replace(/\.html$/, '').split('/').filter(Boolean);
-  // drop locale (first two segments, e.g. us/en) and the current page (last)
-  const parents = segs.slice(2, -1);
+  const rest = segs.slice(2); // drop locale (us/en)
   let href = `/${segs.slice(0, 2).join('/')}`;
-  return parents.map((seg) => {
+  return rest.map((seg, i) => {
     href += `/${seg}`;
-    return { label: TITLE_CASE(seg), href };
+    const isLast = i === rest.length - 1;
+    return {
+      label: isLast ? currentLabel : TITLE_CASE(seg),
+      href: isLast ? null : href,
+    };
   });
 }
 
 export default function decorate(block) {
-  const links = [...block.querySelectorAll('a')];
-  let items = links.length
-    ? links.map((a) => ({ label: a.textContent.trim(), href: a.getAttribute('href') }))
-    : [...block.querySelectorAll('li, p, div')].map((el) => ({ label: el.textContent.trim(), href: null })).filter((i) => i.label);
+  // Prefer the current page's authored title (last non-link crumb / h1),
+  // fall back to the document title.
+  const authored = [...block.querySelectorAll('a, li, p, div')]
+    .map((el) => el.textContent.trim()).filter(Boolean);
+  const h1 = document.querySelector('main h1');
+  const currentLabel = (h1 && h1.textContent.trim())
+    || authored[authored.length - 1]
+    || document.title;
 
-  // If the authored trail only carries the current page (parents were lost in
-  // import), reconstruct the ancestor links from the URL path.
-  const current = items[items.length - 1] || { label: document.title, href: null };
-  const hasParents = items.some((i) => i.href);
-  if (!hasParents) {
-    items = [...ancestorsFromPath(), { label: current.label, href: null }];
-  }
+  const items = trailFromPath(currentLabel);
 
   const nav = document.createElement('nav');
   nav.setAttribute('aria-label', 'Breadcrumb');
