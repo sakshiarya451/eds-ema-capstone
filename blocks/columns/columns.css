@@ -205,6 +205,12 @@
   color: var(--text-color);
 }
 
+/* WKND hover: item turns brand-yellow, the grey accent bar darkens */
+.columns.article > div > div:last-child li:hover {
+  background: var(--accent-color);
+  border-left-color: var(--text-color);
+}
+
 .columns.article > div > div:last-child li a:hover {
   text-decoration: none;
 }
