@@ -31,7 +31,16 @@ function buildCard(row) {
   if (row.image) {
     const a = document.createElement('a');
     a.href = row.path;
-    const pic = createOptimizedPicture(row.image, row.title || '', false, [{ width: '750' }]);
+    // query-index stores the image as an absolute URL on the live host. Strip
+    // the origin to a same-origin path so it loads on whatever host is serving
+    // this page (branch preview / live) — an absolute live URL would be a
+    // cross-origin image blocked by CORS on the .aem.page preview host.
+    let imgUrl = row.image;
+    try {
+      const u = new URL(row.image, window.location.href);
+      imgUrl = u.pathname + u.search;
+    } catch (e) { /* not a URL — use as-is */ }
+    const pic = createOptimizedPicture(imgUrl, row.title || '', false, [{ width: '750' }]);
     a.append(pic);
     imageDiv.append(a);
   }
