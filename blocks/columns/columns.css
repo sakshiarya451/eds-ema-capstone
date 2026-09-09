@@ -33,46 +33,41 @@
 }
 
 /* --- Adventures intro hero (columns.intro) ----------------------------
-   WKND renders this as a full-bleed image (1440x640) with a white content
-   box (heading + paragraph) overlapping the bottom edge of the image
-   (content pulled up 180px, 1136px wide, centered, 0 28px padding).
+   WKND: a wide image (constrained to the content container, NOT full-bleed)
+   with a white content box overlapping its bottom edge. The box's text aligns
+   to the section content-left (same column as "Current Adventures"), and the
+   text is top-aligned within the 180px box (~18px from the top).
    `.intro` and `.featured` are mutually-exclusive columns variants. */
 /* stylelint-disable no-descending-specificity */
 
-/* Two rows: row 1 = full-bleed image, row 2 = white content box pulled up to
-   overlap the image bottom. */
+/* Two rows: row 1 = image, row 2 = white content box pulled up to overlap. */
 .columns.intro > div {
   display: block;
 }
 
-/* row 1: full-bleed image breaking out of the section max-width */
-.columns.intro > div:first-child {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-}
-
+/* row 1: image fills the section content width (capped, not 100vw). */
 .columns.intro > div:first-child img {
   display: block;
-  width: 100vw;
+  width: 100%;
   height: 640px;
   object-fit: cover;
 }
 
-/* row 2: white content box overlapping the bottom of the image. WKND fixes
-   the box to 180px and pulls it up 180px, so its bottom edge sits exactly on
-   the image's bottom edge (content vertically centered within). */
+/* row 2: white content box overlapping the bottom of the image. Fixed 180px
+   height, pulled up 180px so its bottom sits on the image's bottom edge.
+   Full section width so its left edge / text align with "Current Adventures".
+   Text is top-aligned (not centered), matching WKND. */
 .columns.intro > div:last-child {
   position: relative;
   z-index: 1;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   width: 100%;
-  max-width: 1136px;
-  height: 180px;
-  margin: -180px auto 0;
-  padding: 0 28px;
+  min-height: 180px;
+
+  /* pull up to overlap the image bottom; no left padding so the text aligns
+     with the "Current Adventures" heading below; top-aligned content. */
+  margin: -180px 0 0;
+  padding: 24px 0 0;
   background-color: var(--background-color);
 }
 
