@@ -34,7 +34,32 @@
       ],
       "representativeUrl": "https://wknd.site/us/en/adventures/bali-surf-camp.html",
       "description": "To be named in naming step",
-      "blocks": [],
+      "blocks": [
+        {
+          "name": "breadcrumbs",
+          "instances": [
+            "main div.breadcrumb .cmp-breadcrumb"
+          ]
+        },
+        {
+          "name": "carousel",
+          "instances": [
+            "main div.carousel.cmp-carousel--mini"
+          ]
+        },
+        {
+          "name": "adventure-details",
+          "instances": [
+            "main div.contentfragment.cmp-contentfragment--elements"
+          ]
+        },
+        {
+          "name": "tabs",
+          "instances": [
+            "main div.tabs.panelcontainer"
+          ]
+        }
+      ],
       "coverageGaps": [],
       "urlPattern": "/us/en/adventures/*"
     },

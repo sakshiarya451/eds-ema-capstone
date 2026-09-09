@@ -1,0 +1,41 @@
+.adventure-details .adventure-details-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 0;
+}
+
+.adventure-details .adventure-details-list dt {
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #767676;
+  margin-top: 16px;
+}
+
+.adventure-details .adventure-details-list dd {
+  margin: 0;
+  font-size: var(--body-font-size-s);
+  color: var(--text-color);
+  border-bottom: 1px solid var(--border-color, #ebebeb);
+  padding-bottom: 12px;
+}
+
+@media (width >= 900px) {
+  .adventure-details .adventure-details-list {
+    grid-template-columns: auto 1fr;
+    column-gap: 24px;
+    align-items: baseline;
+  }
+
+  .adventure-details .adventure-details-list dt {
+    margin-top: 0;
+    padding: 12px 0;
+  }
+
+  .adventure-details .adventure-details-list dd {
+    padding: 12px 0;
+    text-align: right;
+  }
+}
