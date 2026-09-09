@@ -61,13 +61,15 @@
   position: relative;
   z-index: 1;
   box-sizing: border-box;
-  width: 100%;
+  width: 1192px;
+  max-width: 100%;
   min-height: 180px;
 
-  /* pull up to overlap the image bottom; no left padding so the text aligns
-     with the "Current Adventures" heading below; top-aligned content. */
-  margin: -180px 0 0;
-  padding: 24px 0 0;
+  /* WKND proportion: under a 1200px image, the white box is 1192px total
+     (1136px content + 28px padding each side), centered, pulled up 180px to
+     overlap the image's bottom edge. Content is top-aligned. */
+  margin: -180px auto 0;
+  padding: 24px 28px 0;
   background-color: var(--background-color);
 }
 
