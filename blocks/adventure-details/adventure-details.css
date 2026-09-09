@@ -41,18 +41,17 @@
     padding: 0 var(--spacing-l);
   }
 
+  /* Specs form the left sidebar spanning the full height of the section */
   main .section.two-col > .adventure-details-wrapper {
     grid-column: 1;
+    grid-row: 1 / span 99;
   }
 
+  /* Right column fills top-down: share heading then tabs (tabs at the top,
+     aligned with the specs — no gap above them) */
+  main .section.two-col > .default-content-wrapper,
   main .section.two-col > .tabs-wrapper {
     grid-column: 2;
-  }
-
-  /* the section-metadata wrapper is display:none; keep any stray default
-     content (e.g. share heading) spanning full width */
-  main .section.two-col > .default-content-wrapper {
-    grid-column: 1 / -1;
   }
 }
 
