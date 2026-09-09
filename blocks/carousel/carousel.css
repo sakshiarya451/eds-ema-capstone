@@ -55,11 +55,12 @@
   object-fit: cover;
 }
 
-/* WKND: wide white panel anchored to the bottom of the image, dark text */
+/* WKND: wide white panel anchored to the bottom of the image, dark text,
+   inset from the left edge with the text aligned to the page content column */
 .carousel .carousel-slide .carousel-slide-content {
   z-index: 1;
   margin: 0;
-  padding: 32px 40px 40px;
+  padding: 32px 40px 40px 60px;
   color: var(--text-color);
   background-color: var(--background-color);
   position: relative;
@@ -120,9 +121,11 @@
   width: 32px;
   height: 32px;
   margin: 0;
+  border: 0;
   border-radius: 0;
   padding: 0;
   background-color: transparent;
+  color: var(--text-color);
   transition: opacity 0.2s;
 }
 
