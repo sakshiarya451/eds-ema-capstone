@@ -16,5 +16,12 @@ export default async function decorate(block) {
   const footer = document.createElement('div');
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
 
+  // Classify the four footer sections (matches WKND: brand | nav | social | legal)
+  const classes = ['footer-brand', 'footer-nav', 'footer-social', 'footer-legal'];
+  classes.forEach((c, i) => {
+    const section = footer.children[i];
+    if (section) section.classList.add(c);
+  });
+
   block.append(footer);
 }
