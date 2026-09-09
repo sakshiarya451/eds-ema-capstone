@@ -30,11 +30,14 @@
    WKND cards have no border/background/radius; 4 per row on desktop, ~14px
    column gap and 32px row gap; image is a 4:3 cover crop. */
 .cards.adventures > ul {
-  grid-template-columns: repeat(4, 1fr);
+  /* minmax(0, 1fr) stops tracks from blowing out to the image's intrinsic
+     width — otherwise each 1fr grows to the full-res image size. */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 32px 14px;
 }
 
 .cards.adventures > ul > li {
+  min-width: 0;
   border: 0;
   background-color: transparent;
 }
@@ -43,8 +46,16 @@
   line-height: 0;
 }
 
+/* the image link + picture must fill the cell so the img can clamp to 100% */
+.cards.adventures .cards-card-image a,
+.cards.adventures .cards-card-image picture {
+  display: block;
+  width: 100%;
+}
+
 .cards.adventures .cards-card-image img {
   width: 100%;
+  height: auto;
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
