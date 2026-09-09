@@ -109,9 +109,10 @@ footer .footer-legal a:any-link {
 }
 
 /* Desktop: top row = logo | nav | Follow Us | social (matches WKND grid);
-   legal spans full width beneath. */
+   legal spans full width beneath. The four classed sections live inside an
+   unclassed wrapper div (.footer > div), so the grid goes on that wrapper. */
 @media (width >= 900px) {
-  footer .footer {
+  footer .footer > div {
     display: grid;
     grid-template-columns: 2fr 6fr 2fr 2fr;
     column-gap: 24px;
