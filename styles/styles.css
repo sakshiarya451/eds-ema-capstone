@@ -380,7 +380,7 @@ body.content-overview main .default-content-wrapper h2:only-of-type::after {
   content: '';
   display: block;
   width: 84px;
-  margin-top: 12px;
+  margin-top: 8px;
   border-bottom: 2px solid var(--accent-color);
 }
 
