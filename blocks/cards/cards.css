@@ -109,19 +109,20 @@
   color: var(--text-color);
 }
 
-/* Card title (WKND: uppercase, Source Sans 18px, blue link) */
+/* Card title (WKND: Source Sans 18px, weight 600, UPPERCASE, dark #202020) */
 .cards.adventures .cards-card-body h3,
 .cards.magazine .cards-card-body h3 {
   margin: 0 0 8px;
   font-family: var(--body-font-family);
   font-size: var(--body-font-size-m);
-  font-weight: 400;
+  font-weight: 600;
+  line-height: 1.5;
   text-transform: uppercase;
 }
 
 .cards.adventures .cards-card-body h3 a,
 .cards.magazine .cards-card-body h3 a {
-  color: var(--link-color);
+  color: var(--text-color);
   text-decoration: none;
 }
 
@@ -130,12 +131,14 @@
   text-decoration: underline;
 }
 
-/* Card description: WKND truncates to a single line with an ellipsis */
+/* Card description (WKND: 14px UPPERCASE grey #696969, single-line ellipsis) */
 .cards.adventures .cards-card-body p,
 .cards.magazine .cards-card-body p {
   margin: 0;
-  font-size: var(--body-font-size-m);
+  font-size: var(--body-font-size-xs);
   line-height: 1.5;
+  text-transform: uppercase;
+  color: #696969;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
