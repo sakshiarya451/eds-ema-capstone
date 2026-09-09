@@ -106,6 +106,13 @@
   }
 }
 
+/* Reserve the scrollbar gutter at all times so page/header width never shifts
+   when the vertical scrollbar appears or disappears (fixes the sticky header
+   appearing to "narrow" on scroll). */
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   display: none;
   margin: 0;
