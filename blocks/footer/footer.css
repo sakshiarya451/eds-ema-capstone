@@ -147,6 +147,11 @@ footer .footer-legal a:any-link {
   footer .footer-social {
     grid-column: 3 / span 2;
     grid-row: 1;
+  }
+
+  /* h4 + icons are both inside .default-content-wrapper — flex THAT so
+     "FOLLOW US" sits inline to the left of the icon box (matches WKND). */
+  footer .footer-social .default-content-wrapper {
     display: flex;
     align-items: center;
     gap: 24px;
@@ -154,6 +159,7 @@ footer .footer-legal a:any-link {
 
   footer .footer-social h4 {
     margin: 0;
+    white-space: nowrap;
   }
 
   footer .footer-legal {
