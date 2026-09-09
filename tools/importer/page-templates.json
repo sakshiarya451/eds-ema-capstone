@@ -86,6 +86,34 @@
       "urlPattern": "/us/en/*"
     },
     {
+      "name": "magazine-article",
+      "urls": [
+        "https://wknd.site/us/en/magazine/arctic-surfing.html",
+        "https://wknd.site/us/en/magazine/ski-touring.html",
+        "https://wknd.site/us/en/magazine/san-diego-surf.html",
+        "https://wknd.site/us/en/magazine/guide-la-skateparks.html",
+        "https://wknd.site/us/en/magazine/western-australia.html"
+      ],
+      "representativeUrl": "https://wknd.site/us/en/magazine/arctic-surfing.html",
+      "description": "Magazine article: hero image, breadcrumbs, two-column body (article rich text + share/related sidebar)",
+      "blocks": [
+        {
+          "name": "breadcrumbs",
+          "instances": [
+            "main div.breadcrumb .cmp-breadcrumb"
+          ]
+        },
+        {
+          "name": "article-body",
+          "instances": [
+            "main main.container:has(article.contentfragment)"
+          ]
+        }
+      ],
+      "coverageGaps": [],
+      "urlPattern": "/us/en/magazine/*"
+    },
+    {
       "name": "homepage",
       "urls": [
         "https://wknd.site/us/en.html",

@@ -50,3 +50,147 @@
 .columns.featured > div > div:not(.columns-img-col) p {
   font-size: var(--body-font-size-xs);
 }
+
+/* --- Magazine article body (columns.article) ---------------------------
+   WKND renders the article as a wide reading column (left) + a narrow
+   share/related sidebar (right). Measured from wknd.site:
+   left 776px, right 291px, no gutter gap; article copy at 18px/45px line
+   height; headings in the serif display face.
+   `.article` and `.featured` are mutually-exclusive columns variants, so the
+   cross-variant source-order rule doesn't apply between them. */
+/* stylelint-disable no-descending-specificity */
+.columns.article > div {
+  gap: 0;
+  align-items: start;
+}
+
+.columns.article > div > div:first-child {
+  /* article body reading column */
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 776px;
+}
+
+.columns.article > div > div:last-child {
+  /* share / related sidebar */
+  flex: 1;
+}
+
+/* Article headline + byline */
+.columns.article h1 {
+  margin-top: 24px;
+  margin-bottom: 12px;
+  font-size: 40px;
+  line-height: 1.5;
+}
+
+.columns.article h4 {
+  margin: 20px 0;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Section headings inside the article */
+.columns.article h2 {
+  margin-top: 27px;
+  margin-bottom: 12px;
+  font-size: 36px;
+  line-height: 1.5;
+}
+
+/* Body copy: airy WKND leading */
+.columns.article > div > div:first-child p {
+  margin: 0 0 13.5px;
+  font-size: var(--body-font-size-m);
+  line-height: 2.5;
+}
+
+.columns.article blockquote {
+  margin: 18px 0;
+  padding: 0;
+  border: 0;
+  font-style: italic;
+}
+
+.columns.article blockquote p {
+  line-height: 1.5;
+}
+
+/* Inline article images span the reading column (images are wrapped in <p>) */
+.columns.article > div > div:first-child p:has(img) {
+  margin: 24px 0 7px;
+}
+
+.columns.article > div > div:first-child p img {
+  width: 100%;
+  display: block;
+}
+
+/* Author bio: avatar (in the <p> right after the <hr>) floats left of the
+   name + role which follow as sibling elements. */
+.columns.article hr {
+  margin: 32px 0 24px;
+  border: 0;
+  border-top: 1px solid var(--light-color);
+  overflow: visible;
+}
+
+.columns.article hr + p {
+  float: left;
+  width: 60px;
+  margin: 0 16px 24px 0;
+}
+
+.columns.article hr + p img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.columns.article hr ~ h2 {
+  margin-top: 0;
+  font-size: 24px;
+}
+
+.columns.article hr ~ p:not(:has(img)) {
+  clear: none;
+}
+
+/* --- Sidebar: SHARE THIS STORY + related list --- */
+.columns.article > div > div:last-child h5 {
+  margin: 0 0 24px;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.columns.article > div > div:last-child ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.columns.article > div > div:last-child li {
+  margin: 0;
+  padding: 8px 16px;
+}
+
+.columns.article > div > div:last-child li a {
+  display: block;
+  font-size: var(--body-font-size-m);
+  color: var(--text-color);
+}
+
+.columns.article > div > div:last-child li em {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--body-font-size-xs);
+  font-style: normal;
+  color: #696969;
+}
+
+/* stylelint-enable no-descending-specificity */
