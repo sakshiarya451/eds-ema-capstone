@@ -1,17 +1,11 @@
 /* eslint-disable */
 /* global WebImporter */
 
-// PARSER IMPORTS
-import columnsParser from './parsers/columns.js';
-
 // TRANSFORMER IMPORTS
 import cleanupTransformer from './transformers/wknd-cleanup.js';
-import sectionsTransformer from './transformers/wknd-sections.js';
 
-// PARSER REGISTRY
-const parsers = {
-  columns: columnsParser,
-};
+// PARSER REGISTRY (the intro teaser is built inline below, not via a parser)
+const parsers = {};
 
 // PAGE TEMPLATE CONFIGURATION
 // Source (verified against wknd.site/us/en/adventures.html): 3 sections —
@@ -28,18 +22,13 @@ const PAGE_TEMPLATE = {
   urls: [
     'https://wknd.site/us/en/adventures.html',
   ],
-  blocks: [
-    { name: 'columns', instances: ['main div.teaser.cmp-teaser--hero'] },
-  ],
-  sections: [
-    { id: 's1-title', name: 'Title', style: null, selector: 'main div.title, main .cmp-title', blocks: [], defaultContent: ['title'] },
-    { id: 's2-intro', name: 'Intro', style: null, selector: 'main div.teaser.cmp-teaser--hero', blocks: ['columns'], defaultContent: [] },
-  ],
+  blocks: [],
 };
 
+// Section breaks are inserted manually in transform() (the 3 sections are
+// built imperatively), so only the site-wide cleanup transformer runs here.
 const transformers = [
   cleanupTransformer,
-  ...(PAGE_TEMPLATE.sections && PAGE_TEMPLATE.sections.length > 1 ? [sectionsTransformer] : []),
 ];
 
 function executeTransformers(hookName, element, payload) {
@@ -53,17 +42,6 @@ function executeTransformers(hookName, element, payload) {
   });
 }
 
-function findBlocksOnPage(document, template) {
-  const pageBlocks = [];
-  template.blocks.forEach((blockDef) => {
-    blockDef.instances.forEach((selector) => {
-      document.querySelectorAll(selector).forEach((element) => {
-        pageBlocks.push({ name: blockDef.name, selector, element });
-      });
-    });
-  });
-  return pageBlocks;
-}
 
 export default {
   transform: (payload) => {
@@ -81,31 +59,43 @@ export default {
     const currentAdvMain = fixedMains.reverse().find((m) => /current adventures/i.test(m.textContent));
     if (currentAdvMain) currentAdvMain.remove();
 
-    // 1. beforeTransform (section breaks + drop chrome)
-    executeTransformers('beforeTransform', main, payload);
-
-    // 2/3. Find + parse blocks (the intro teaser → columns)
-    const pageBlocks = findBlocksOnPage(document, PAGE_TEMPLATE);
-    pageBlocks.forEach((block) => {
-      if (!block.element.parentNode) return;
-      const parser = parsers[block.name];
-      if (parser) {
-        try {
-          parser(block.element, { document, url, params });
-        } catch (e) {
-          console.error(`Failed to parse ${block.name}:`, e);
-        }
+    // Build the intro block from the source hero teaser BEFORE section breaks
+    // are inserted. WKND renders it as a full-bleed image with a white content
+    // box (heading + paragraph) overlapping its bottom edge. We emit a
+    // `columns (intro)` block: row 1 = image, row 2 = heading + paragraph; the
+    // .columns.intro CSS reproduces the overlap.
+    const heroTeaser = document.querySelector('main div.teaser.cmp-teaser--hero');
+    if (heroTeaser) {
+      const img = heroTeaser.querySelector('.cmp-teaser__image img, .cmp-image img, img');
+      const h2 = heroTeaser.querySelector('.cmp-teaser__title, h2, h3');
+      const desc = heroTeaser.querySelector('.cmp-teaser__description, [class*="description"], p');
+      const textCell = [];
+      if (h2) {
+        const h = document.createElement('h2');
+        h.textContent = h2.textContent.trim();
+        textCell.push(h);
       }
-    });
+      if (desc) {
+        const p = document.createElement('p');
+        p.textContent = desc.textContent.trim();
+        textCell.push(p);
+      }
+      const introBlock = WebImporter.Blocks.createBlock(document, {
+        name: 'columns (intro)',
+        cells: [[img ? img.cloneNode(true) : ''], [textCell]],
+      });
+      // Section break BEFORE the intro so it becomes its own section.
+      heroTeaser.replaceWith(document.createElement('hr'), introBlock);
+    }
 
-    // 4. afterTransform (section metadata + cleanup)
+    // 1. beforeTransform / afterTransform (drop chrome, cleanup CTAs)
+    executeTransformers('beforeTransform', main, payload);
     executeTransformers('afterTransform', main, payload);
 
-    // 5. Section 3: "Current Adventures" heading + dynamic cards block.
+    // Section 3: "Current Adventures" heading + dynamic cards block.
     // Emitted here (not imported) because the card grid is rendered from
     // query-index.json at runtime by the cards.adventures block.
-    const hrBefore = document.createElement('hr');
-    main.appendChild(hrBefore);
+    main.appendChild(document.createElement('hr'));
     const heading = document.createElement('h2');
     heading.textContent = 'Current Adventures';
     main.appendChild(heading);
@@ -143,7 +133,7 @@ export default {
     return [{
       element: main,
       path,
-      report: { title: document.title, template: PAGE_TEMPLATE.name, blocks: pageBlocks.map((b) => b.name) },
+      report: { title: document.title, template: PAGE_TEMPLATE.name, blocks: ['columns (intro)', 'cards (adventures)'] },
     }];
   },
 };

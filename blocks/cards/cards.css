@@ -27,12 +27,44 @@
 }
 
 /* --- Dynamic adventures listing (cards.adventures) ---------------------
-   WKND filter tab row: uppercase labels; the active tab is white-on-dark. */
+   WKND cards have no border/background/radius; 4 per row on desktop, ~14px
+   column gap and 32px row gap; image is a 4:3 cover crop. */
+.cards.adventures > ul {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px 14px;
+}
+
+.cards.adventures > ul > li {
+  border: 0;
+  background-color: transparent;
+}
+
+.cards.adventures .cards-card-image {
+  line-height: 0;
+}
+
+.cards.adventures .cards-card-image img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.cards.adventures .cards-card-body {
+  margin: 16px 0 0;
+}
+
+/* WKND filter tab row: uppercase labels; the active tab is white-on-dark. */
 .cards.adventures .cards-tabs {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin: 0 0 32px;
+}
+
+@media (width < 900px) {
+  .cards.adventures > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .cards.adventures .cards-tab {
