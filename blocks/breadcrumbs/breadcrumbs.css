@@ -17,11 +17,16 @@
   color: var(--text-color);
 }
 
-/* separator between crumbs */
+/* separator between crumbs: a small yellow right-pointing triangle, matching
+   WKND's icon-font arrow (brand yellow #ffea00). */
 .breadcrumbs nav .breadcrumbs-list li:not(:first-child)::before {
-  content: '>';
-  margin-right: 8px;
-  color: #767676;
+  content: '';
+  width: 0;
+  height: 0;
+  margin-right: 12px;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 7px solid var(--accent-color);
 }
 
 .breadcrumbs nav .breadcrumbs-list a:any-link {

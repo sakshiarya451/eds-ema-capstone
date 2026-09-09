@@ -60,20 +60,20 @@
    cross-variant source-order rule doesn't apply between them. */
 /* stylelint-disable no-descending-specificity */
 .columns.article > div {
-  gap: 0;
+  gap: 97px;
   align-items: start;
 }
 
 .columns.article > div > div:first-child {
   /* article body reading column */
-  flex: 0 0 auto;
-  width: 100%;
+  flex: 1 1 auto;
+  min-width: 0;
   max-width: 776px;
 }
 
 .columns.article > div > div:last-child {
-  /* share / related sidebar */
-  flex: 1;
+  /* share / related sidebar: fixed narrow column, WKND ~97px gutter (gap) */
+  flex: 0 0 291px;
 }
 
 /* Article headline + byline */
@@ -92,19 +92,35 @@
   text-transform: uppercase;
 }
 
-/* Section headings inside the article */
+/* Section headings inside the article, each with a short yellow accent bar
+   beneath (WKND: 84px x 2px #ffea00). The author-name h2 (after the <hr>)
+   is excluded below. */
 .columns.article h2 {
   margin-top: 27px;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
   font-size: 36px;
   line-height: 1.5;
 }
 
-/* Body copy: airy WKND leading */
+.columns.article > div > div:first-child h2::after {
+  content: '';
+  display: block;
+  width: 84px;
+  margin-top: 12px;
+  border-bottom: 2px solid var(--accent-color);
+}
+
+/* author-name h2 (after the bio separator) has no accent bar */
+.columns.article > div > div:first-child hr ~ h2::after {
+  content: none;
+}
+
+/* Body copy: airy WKND leading, justified like the source */
 .columns.article > div > div:first-child p {
   margin: 0 0 13.5px;
   font-size: var(--body-font-size-m);
   line-height: 2.5;
+  text-align: justify;
 }
 
 .columns.article blockquote {
@@ -174,22 +190,31 @@
   list-style: none;
 }
 
+/* Each related item is a card with a grey vertical accent bar on the left
+   (WKND: 5px solid #ebebeb, 16px inner padding). */
 .columns.article > div > div:last-child li {
-  margin: 0;
+  margin: 0 0 18px;
   padding: 8px 16px;
+  border-left: 5px solid var(--light-color);
 }
 
 .columns.article > div > div:last-child li a {
   display: block;
   font-size: var(--body-font-size-m);
+  text-transform: uppercase;
   color: var(--text-color);
+}
+
+.columns.article > div > div:last-child li a:hover {
+  text-decoration: none;
 }
 
 .columns.article > div > div:last-child li em {
   display: block;
-  margin-top: 2px;
-  font-size: var(--body-font-size-xs);
+  margin-top: 8px;
+  font-size: 12px;
   font-style: normal;
+  text-transform: uppercase;
   color: #696969;
 }
 

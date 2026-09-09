@@ -26,23 +26,21 @@ function trailFromPath(currentLabel) {
     href += `/${seg}`;
     const isLast = i === rest.length - 1;
     return {
-      label: isLast ? currentLabel : TITLE_CASE(seg),
+      // current crumb: use the provided label if any, else the title-cased
+      // URL segment (matches WKND's page navigation title).
+      label: isLast ? (currentLabel || TITLE_CASE(seg)) : TITLE_CASE(seg),
       href: isLast ? null : href,
     };
   });
 }
 
 export default function decorate(block) {
-  // Prefer the current page's authored title (last non-link crumb / h1),
-  // fall back to the document title.
-  const authored = [...block.querySelectorAll('a, li, p, div')]
-    .map((el) => el.textContent.trim()).filter(Boolean);
-  const h1 = document.querySelector('main h1');
-  const currentLabel = (h1 && h1.textContent.trim())
-    || authored[authored.length - 1]
-    || document.title;
-
-  const items = trailFromPath(currentLabel);
+  // WKND's breadcrumb current crumb is the page's navigation title — i.e. the
+  // title-cased last URL segment (e.g. "Arctic Surfing"), NOT the on-page h1
+  // headline (which can differ, e.g. "Aloha Spirits in Northern Norway").
+  // trailFromPath derives that from the path; passing null lets it title-case
+  // the segment. Authored crumbs / h1 are ignored so the trail is deterministic.
+  const items = trailFromPath(null);
 
   const nav = document.createElement('nav');
   nav.setAttribute('aria-label', 'Breadcrumb');
