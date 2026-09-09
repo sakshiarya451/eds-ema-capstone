@@ -55,16 +55,17 @@
   object-fit: cover;
 }
 
-/* WKND: wide white panel anchored to the bottom of the image, dark text,
-   inset from the left edge with the text aligned to the page content column */
+/* WKND: wide white panel anchored to the bottom of the image, dark text.
+   The panel is inset from the left viewport edge (gap before the panel) so its
+   content aligns with the page content column. */
 .carousel .carousel-slide .carousel-slide-content {
   z-index: 1;
-  margin: 0;
-  padding: 32px 40px 40px 60px;
+  margin: 0 0 0 40px;
+  padding: 32px 40px;
   color: var(--text-color);
   background-color: var(--background-color);
   position: relative;
-  width: var(--slide-content-width, 92%);
+  width: var(--slide-content-width, 88%);
   align-self: flex-start;
 }
 
@@ -159,10 +160,11 @@
     right: 24px;
   }
 
-  /* Panel spans a wide left-anchored band over the image bottom, like WKND */
+  /* Panel spans a wide left-anchored band over the image bottom, like WKND,
+     inset from the left edge so there is a clear gap before the panel */
   .carousel .carousel-slide .carousel-slide-content {
-    --slide-content-width: 76%;
+    --slide-content-width: 72%;
 
-    margin: 0;
+    margin: 0 0 0 64px;
   }
 }
