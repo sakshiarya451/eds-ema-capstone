@@ -17,25 +17,30 @@
 export default function parse(element, { document }) {
   const items = [...element.querySelectorAll('.cmp-breadcrumb__item, li')];
 
-  const cell = [];
+  // Each crumb becomes its OWN row (single cell) so every trail item survives
+  // the block-table → markdown → HTML roundtrip. Linked crumbs render as <a>;
+  // the current/active crumb (no href) renders as plain text — avoiding two
+  // adjacent <a href="#"> anchors that the md pipeline can collapse.
+  const cells = [];
   items.forEach((li) => {
     const link = li.querySelector('a');
     const label = (li.querySelector('span') || li).textContent.trim();
     if (!label) return;
-    const a = document.createElement('a');
-    a.textContent = label;
-    a.href = link ? link.getAttribute('href') : '#';
-    cell.push(a);
+    if (link && link.getAttribute('href')) {
+      const a = document.createElement('a');
+      a.textContent = label;
+      a.href = link.getAttribute('href');
+      cells.push([a]);
+    } else {
+      cells.push([label]); // current page — plain text, no anchor
+    }
   });
 
   // Empty-block guard: nothing usable extracted.
-  if (!cell.length) {
+  if (!cells.length) {
     element.replaceWith(...element.childNodes);
     return;
   }
-
-  const cells = [];
-  cells.push([cell]); // 1-column: one row, one cell holding all trail links
 
   const block = WebImporter.Blocks.createBlock(document, { name: 'breadcrumbs', cells });
   element.replaceWith(block);
