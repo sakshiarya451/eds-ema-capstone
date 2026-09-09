@@ -1,41 +1,56 @@
+/* WKND adventure specs: stacked label-above-value with a left accent bar,
+   listed vertically (sidebar column). */
 .adventure-details .adventure-details-list {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
   margin: 0;
 }
 
 .adventure-details .adventure-details-list dt {
+  padding-left: 16px;
+  border-left: 2px solid var(--accent-color);
   font-size: var(--body-font-size-xs);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
   color: #767676;
-  margin-top: 16px;
 }
 
 .adventure-details .adventure-details-list dd {
-  margin: 0;
-  font-size: var(--body-font-size-s);
+  margin: 4px 0 0;
+  padding-left: 16px;
+  border-left: 2px solid var(--accent-color);
+  font-size: var(--body-font-size-m);
+  font-weight: 600;
+  text-transform: uppercase;
   color: var(--text-color);
-  border-bottom: 1px solid var(--border-color, #ebebeb);
-  padding-bottom: 12px;
 }
 
+/* WKND 2-column body: specs sidebar (left) + tabs (right), on desktop.
+   Grids the section that contains BOTH the adventure-details and tabs wrappers.
+   Falls back to stacked layout on mobile / if only one is present. */
 @media (width >= 900px) {
-  .adventure-details .adventure-details-list {
-    grid-template-columns: auto 1fr;
-    column-gap: 24px;
-    align-items: baseline;
+  main .section:has(> .adventure-details-wrapper):has(> .tabs-wrapper) {
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) 3fr;
+    column-gap: 48px;
+    align-items: start;
   }
 
-  .adventure-details .adventure-details-list dt {
-    margin-top: 0;
-    padding: 12px 0;
+  main .section:has(> .adventure-details-wrapper):has(> .tabs-wrapper)
+    > .default-content-wrapper {
+    grid-column: 1 / -1;
   }
 
-  .adventure-details .adventure-details-list dd {
-    padding: 12px 0;
-    text-align: right;
+  main .section:has(> .adventure-details-wrapper):has(> .tabs-wrapper)
+    > .adventure-details-wrapper {
+    grid-column: 1;
+  }
+
+  main .section:has(> .adventure-details-wrapper):has(> .tabs-wrapper)
+    > .tabs-wrapper {
+    grid-column: 2;
+    grid-row: 1 / 99;
   }
 }
