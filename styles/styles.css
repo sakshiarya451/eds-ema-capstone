@@ -387,6 +387,17 @@ main > .section:has(.columns:not(.featured, .article, .intro, .faq)) > div {
   padding: 0;
 }
 
+/* WKND homepage: a thin grey separator line closes the "Recent Articles" and
+   "Where do you want to go?" sections (right after the All Articles / All Trips
+   buttons). These are the homepage's default-content-wrapper card sections; add
+   a matching 2px #ebebeb rule beneath each via the button-wrapper paragraph. */
+body.homepage main > .section:has(.cards):not(:has(.carousel)) > div::after {
+  content: '';
+  display: block;
+  margin-top: 40px;
+  border-bottom: 2px solid var(--light-color);
+}
+
 /* WKND listing pages: standalone section-title h2s get a short yellow accent
    bar beneath (84px x 2px). Targets a lone default-content h2 (a title
    component alone) — not teaser groups (2 h2s) or in-block headings. */

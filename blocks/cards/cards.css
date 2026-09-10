@@ -26,12 +26,16 @@
   object-fit: cover;
 }
 
-/* --- Dynamic listing cards (cards.adventures / cards.magazine) ---------
+/* --- WKND card grids (dynamic listings + homepage) ---------------------
    WKND cards have no border/background/radius; 4 per row on desktop, ~14px
-   column gap and 32px row gap; image is a 4:3 cover crop. The adventures and
-   magazine listings share identical card styling. */
+   column gap and 32px row gap; image is a 4:3 cover crop; uppercase Source
+   Sans title; single-line ellipsis description. The adventures and magazine
+   listings use variant classes; the homepage's "Recent Articles" and "Where
+   do you want to go?" grids are plain `.cards` (no variant) but look identical,
+   so plain `.cards` (which is homepage-only) shares this styling via :not(). */
 .cards.adventures > ul,
-.cards.magazine > ul {
+.cards.magazine > ul,
+.cards:not(.adventures, .magazine, .contributors) > ul {
   /* minmax(0, 1fr) stops tracks from blowing out to the image's intrinsic
      width — otherwise each 1fr grows to the full-res image size. */
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -39,14 +43,16 @@
 }
 
 .cards.adventures > ul > li,
-.cards.magazine > ul > li {
+.cards.magazine > ul > li,
+.cards:not(.adventures, .magazine, .contributors) > ul > li {
   min-width: 0;
   border: 0;
   background-color: transparent;
 }
 
 .cards.adventures .cards-card-image,
-.cards.magazine .cards-card-image {
+.cards.magazine .cards-card-image,
+.cards:not(.adventures, .magazine, .contributors) .cards-card-image {
   line-height: 0;
 }
 
@@ -54,13 +60,16 @@
 .cards.adventures .cards-card-image a,
 .cards.adventures .cards-card-image picture,
 .cards.magazine .cards-card-image a,
-.cards.magazine .cards-card-image picture {
+.cards.magazine .cards-card-image picture,
+.cards:not(.adventures, .magazine, .contributors) .cards-card-image a,
+.cards:not(.adventures, .magazine, .contributors) .cards-card-image picture {
   display: block;
   width: 100%;
 }
 
 .cards.adventures .cards-card-image img,
-.cards.magazine .cards-card-image img {
+.cards.magazine .cards-card-image img,
+.cards:not(.adventures, .magazine, .contributors) .cards-card-image img {
   width: 100%;
   height: auto;
   aspect-ratio: 4 / 3;
@@ -68,7 +77,8 @@
 }
 
 .cards.adventures .cards-card-body,
-.cards.magazine .cards-card-body {
+.cards.magazine .cards-card-body,
+.cards:not(.adventures, .magazine, .contributors) .cards-card-body {
   margin: 16px 0 0;
 }
 
@@ -111,7 +121,8 @@
 
 /* Card title (WKND: Source Sans 18px, weight 600, UPPERCASE, dark #202020) */
 .cards.adventures .cards-card-body h3,
-.cards.magazine .cards-card-body h3 {
+.cards.magazine .cards-card-body h3,
+.cards:not(.adventures, .magazine, .contributors) .cards-card-body h3 {
   margin: 0 0 8px;
   font-family: var(--body-font-family);
   font-size: var(--body-font-size-m);
@@ -121,19 +132,22 @@
 }
 
 .cards.adventures .cards-card-body h3 a,
-.cards.magazine .cards-card-body h3 a {
+.cards.magazine .cards-card-body h3 a,
+.cards:not(.adventures, .magazine, .contributors) .cards-card-body h3 a {
   color: var(--text-color);
   text-decoration: none;
 }
 
 .cards.adventures .cards-card-body h3 a:hover,
-.cards.magazine .cards-card-body h3 a:hover {
+.cards.magazine .cards-card-body h3 a:hover,
+.cards:not(.adventures, .magazine, .contributors) .cards-card-body h3 a:hover {
   text-decoration: underline;
 }
 
 /* Card description (WKND: 14px UPPERCASE grey #696969, single-line ellipsis) */
 .cards.adventures .cards-card-body p,
-.cards.magazine .cards-card-body p {
+.cards.magazine .cards-card-body p,
+.cards:not(.adventures, .magazine, .contributors) .cards-card-body p {
   margin: 0;
   font-size: var(--body-font-size-xs);
   line-height: 1.5;
