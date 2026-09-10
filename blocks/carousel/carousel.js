@@ -127,7 +127,9 @@ export default async function decorate(block) {
       <button type="button" class="slide-next" aria-label="${placeholders.nextSlide || 'Next Slide'}"></button>
     `;
 
-    container.append(slideNavButtons);
+    // Append the arrows to the block (not the slides container) so they can sit
+    // in the control strip BELOW the image, matching WKND.
+    block.append(slideNavButtons);
   }
 
   rows.forEach((row, idx) => {

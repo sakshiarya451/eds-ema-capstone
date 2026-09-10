@@ -1,5 +1,9 @@
 .carousel {
   position: relative;
+
+  /* Reserve a strip below the image for the dots + arrows (WKND places the
+     controls below the hero image, not overlaid on it). */
+  padding-bottom: 48px;
 }
 
 .carousel .carousel-slides-container {
@@ -33,7 +37,7 @@
   justify-content: flex-end;
   position: relative;
   width: 100%;
-  min-height: min(46vw, 560px);
+  min-height: min(52vw, 640px);
 }
 
 .carousel .carousel-slide:has(.carousel-slide-content[data-align='center']) {
@@ -78,44 +82,52 @@
 
 .carousel .carousel-slide .carousel-slide-content a.button.accent {
   margin-top: 8px;
+
+  /* WKND CTA: Source Sans 14px/600 uppercase, 14px/35px padding (not the
+     18px default button copy). */
+  font-size: var(--body-font-size-xs);
+  padding: 14px 35px;
 }
 
-/* WKND: dots overlaid bottom-center over the image (not a grey strip below) */
+/* WKND: dots centered in the control strip BELOW the image. */
 .carousel .carousel-slide-indicators {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 6px 12px;
+  margin: 0;
   padding: 0;
   background-color: transparent;
   line-height: 0;
   position: absolute;
-  bottom: 20px;
+  bottom: 14px;
   left: 0;
   right: 0;
   z-index: 2;
 }
 
 .carousel .carousel-slide-indicator button {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   margin: 0;
   padding: 0;
+  border: 0;
   border-radius: 50%;
-  background-color: #afafaf;
+  background-color: #c9c9c9;
+  box-shadow: none;
   transition: background-color 0.2s;
 }
 
 .carousel .carousel-slide-indicator button:disabled,
 .carousel .carousel-slide-indicator button:hover,
 .carousel .carousel-slide-indicator button:focus-visible {
-  background-color: var(--text-color);
+  background-color: rgb(0 0 0 / 80%);
 }
 
-/* WKND: prev/next arrows at bottom-right, over the image */
+/* WKND: prev/next arrows at bottom-right in the control strip below the image */
 .carousel .carousel-navigation-buttons {
   position: absolute;
-  inset: auto 16px 12px auto;
+  inset: auto 16px 8px auto;
   transform: none;
   display: flex;
   align-items: center;
