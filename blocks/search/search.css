@@ -5,6 +5,15 @@
   padding: 24px 0 48px;
 }
 
+/* Reset the default <ul> list marker/indent on the results grid (the shared
+   cards CSS only removes it for the adventures/magazine/contributors variants,
+   not the plain .cards this block uses). */
+.search.cards > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .search .search-heading {
   margin: 0 0 8px;
 }
