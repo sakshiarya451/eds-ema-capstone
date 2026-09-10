@@ -87,9 +87,21 @@ function buildResult(row) {
 export default async function decorate(block) {
   const query = getQuery();
 
-  // Keep the header search input in sync with the active query.
-  const headerInput = document.querySelector('.nav-search input[name="q"]');
-  if (headerInput && query) headerInput.value = query;
+  // Keep the header search input in sync with the active query. The header
+  // loads lazily (after this block decorates), so poll briefly for its input.
+  if (query) {
+    let tries = 0;
+    const syncHeaderInput = () => {
+      const input = document.querySelector('.nav-search input[name="q"]');
+      if (input) {
+        input.value = query;
+      } else if (tries < 40) {
+        tries += 1;
+        setTimeout(syncHeaderInput, 100);
+      }
+    };
+    syncHeaderInput();
+  }
 
   block.textContent = '';
   block.classList.add('cards'); // reuse card styling for the result grid
