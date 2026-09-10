@@ -391,7 +391,8 @@ main > .section > .columns-wrapper:has(.columns:not(.featured, .article, .intro,
 }
 
 /* WKND homepage: remove the top/bottom margin on the card-section button
-   wrapper (All Articles / All Trips) so it sits flush — the card grid's fixed
+   wrapper (All Articles / All Trips) so it sits flush — no separator line is
+   drawn after the buttons / before "Next Adventures"; the card grid's fixed
    height already provides the surrounding spacing. */
 body.homepage main > .section:has(.cards) p.button-wrapper {
   margin-top: 0;

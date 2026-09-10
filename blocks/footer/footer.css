@@ -150,16 +150,22 @@ footer .footer-legal a:any-link {
   }
 
   /* h4 + icons are both inside .default-content-wrapper — flex THAT so
-     "FOLLOW US" sits inline to the left of the icon box (matches WKND). */
+     "FOLLOW US" sits inline to the left of the icon box (matches WKND). WKND
+     bottom-aligns the label with the 48px icon row (label baseline near the
+     icons' bottom), so align to flex-end rather than center. */
   footer .footer-social .default-content-wrapper {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     gap: 24px;
   }
 
   footer .footer-social h4 {
     margin: 0;
     white-space: nowrap;
+
+    /* nudge the label's baseline down so it sits near the bottom of the icons */
+    line-height: 1;
+    padding-bottom: 6px;
   }
 
   footer .footer-legal {
