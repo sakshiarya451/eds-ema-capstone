@@ -343,12 +343,17 @@ main img {
 }
 
 /* sections */
+
+/* WKND global width architecture: the page caps at 1680px; content sits in a
+   1164px column; hero blocks span the full 1680px (rules further below). */
 main > .section {
-  margin: var(--spacing-xl) 0;
+  margin: var(--spacing-xl) auto;
+  max-width: 1680px;
 }
 
 main > .section > div {
-  max-width: var(--section-max-width);
+  box-sizing: border-box;
+  max-width: 1164px;
   margin: auto;
   padding: 0 var(--spacing-m);
 }
@@ -371,22 +376,13 @@ main .section.highlight {
   padding: var(--spacing-xl) 0;
 }
 
-/* --- Homepage width architecture (matches WKND) ------------------------
-   WKND's homepage does NOT use the global 1200px column. Instead:
-   - Hero sections (the carousel and the climbing "imagebottom" columns hero)
-     are FULL-BLEED (edge-to-edge, 100vw).
-   - Content sections (featured teaser, card grids) sit in a 1164px column.
-   Section order: 1 carousel(full) | 2 featured(1164) | 3 cards(1164) |
-   4 columns/climbing(full) | 5 cards(1164). */
-body.homepage main > .section > div {
-  box-sizing: border-box;
-  max-width: 1164px;
-}
-
-/* Full-bleed hero sections: the carousel and the plain-columns (climbing)
-   section break out of the content column to span the viewport. */
-body.homepage main > .section:has(.carousel) > div,
-body.homepage main > .section:has(.columns:not(.featured)) > div {
+/* WKND hero blocks span the full 1680px page width (no inner 1164 column, no
+   padding): the carousel (hero gallery — homepage & adventure-detail) and bare
+   `.columns` heroes (the homepage climbing "imagebottom" teaser). Every other
+   columns instance carries a variant (featured / article / intro / faq), so
+   those stay in the 1164px content column. Verified on wknd.site at 1920px. */
+main > .section:has(.carousel) > div,
+main > .section:has(.columns:not(.featured, .article, .intro, .faq)) > div {
   max-width: none;
   padding: 0;
 }
