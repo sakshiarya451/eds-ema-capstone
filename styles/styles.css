@@ -380,9 +380,12 @@ main .section.highlight {
    padding): the carousel (hero gallery — homepage & adventure-detail) and bare
    `.columns` heroes (the homepage climbing "imagebottom" teaser). Every other
    columns instance carries a variant (featured / article / intro / faq), so
-   those stay in the 1164px content column. Verified on wknd.site at 1920px. */
-main > .section:has(.carousel) > div,
-main > .section:has(.columns:not(.featured, .article, .intro, .faq)) > div {
+   those stay in the 1164px content column. Verified on wknd.site at 1920px.
+   NOTE: target only the wrapper that directly holds the hero block, NOT sibling
+   default-content-wrappers in the same section (e.g. the "Next Adventures"
+   heading), so those stay aligned to the 1164px content column. */
+main > .section > .carousel-wrapper,
+main > .section > .columns-wrapper:has(.columns:not(.featured, .article, .intro, .faq)) {
   max-width: none;
   padding: 0;
 }
@@ -401,6 +404,14 @@ body.homepage main > .section:has(.cards):not(:has(.carousel)) > div:last-child:
 /* WKND listing pages: standalone section-title h2s get a short yellow accent
    bar beneath (84px x 2px). Targets a lone default-content h2 (a title
    component alone) — not teaser groups (2 h2s) or in-block headings. */
+body.magazine-listing main .default-content-wrapper h2:only-of-type,
+body.adventures-listing main .default-content-wrapper h2:only-of-type,
+body.content-overview main .default-content-wrapper h2:only-of-type,
+body.homepage main .default-content-wrapper h2:only-of-type {
+  /* WKND spacing below the accent bar to the next element is 13.5px. */
+  margin-bottom: 13.5px;
+}
+
 body.magazine-listing main .default-content-wrapper h2:only-of-type::after,
 body.adventures-listing main .default-content-wrapper h2:only-of-type::after,
 body.content-overview main .default-content-wrapper h2:only-of-type::after,
