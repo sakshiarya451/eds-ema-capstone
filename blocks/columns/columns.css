@@ -117,6 +117,60 @@
   font-size: var(--body-font-size-xs);
 }
 
+/* --- Homepage "Next Adventures" hero (plain .columns) ------------------
+   WKND renders the Climbing New Zealand block as a FULL-WIDTH image (1200x640)
+   with a white content box (heading + copy + CTA) overlapping its bottom-left,
+   NOT a small side-by-side. Content order in source is [text, image]; we stack
+   them (image first via order) and pull the white box up to overlap, matching
+   the adventures `.intro` hero. Scoped to body.homepage plain columns so the
+   featured / article / intro / faq variants are untouched. */
+body.homepage .columns:not(.featured, .intro, .article, .faq) > div {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 0;
+  align-items: stretch;
+}
+
+/* image cell (2nd cell) fills the section width, 640px tall cover crop */
+body.homepage .columns:not(.featured, .intro, .article, .faq) > div > div:last-child {
+  order: 0;
+  flex: none;
+}
+
+body.homepage .columns:not(.featured, .intro, .article, .faq) > div > div:last-child img {
+  display: block;
+  width: 100%;
+  height: 640px;
+  object-fit: cover;
+}
+
+/* text cell (1st cell) becomes the white box overlapping the image bottom */
+body.homepage .columns:not(.featured, .intro, .article, .faq) > div > div:first-child {
+  order: 1;
+  flex: none;
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  width: 1135px;
+  max-width: 100%;
+  margin: -220px auto 0;
+  padding: 32px 28px 0;
+  background-color: var(--background-color);
+}
+
+body.homepage .columns:not(.featured, .intro, .article, .faq) > div > div:first-child h2 {
+  margin: 0 0 12px;
+  font-size: 36px;
+  font-weight: 400;
+}
+
+body.homepage .columns:not(.featured, .intro, .article, .faq) > div > div:first-child p {
+  margin: 0 0 16px;
+  font-size: var(--body-font-size-m);
+  line-height: 1.75;
+}
+
 /* stylelint-enable no-descending-specificity */
 
 /* --- Magazine article body (columns.article) ---------------------------

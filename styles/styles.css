@@ -388,14 +388,14 @@ main > .section:has(.columns:not(.featured, .article, .intro, .faq)) > div {
 }
 
 /* WKND homepage: a thin grey separator line closes the "Recent Articles" and
-   "Where do you want to go?" sections (right after the All Articles / All Trips
-   buttons). These are the homepage's default-content-wrapper card sections; add
-   a matching 2px #ebebeb rule beneath each via the button-wrapper paragraph. */
-body.homepage main > .section:has(.cards):not(:has(.carousel)) > div::after {
+   "Where do you want to go?" sections — ONLY beneath the All Articles / All
+   Trips button, which is the LAST child div of the card section (a lone
+   default-content-wrapper holding the button link). Matches WKND: 1px #ebebeb. */
+body.homepage main > .section:has(.cards):not(:has(.carousel)) > div:last-child::after {
   content: '';
   display: block;
   margin-top: 40px;
-  border-bottom: 2px solid var(--light-color);
+  border-bottom: 1px solid var(--light-color);
 }
 
 /* WKND listing pages: standalone section-title h2s get a short yellow accent
@@ -403,7 +403,8 @@ body.homepage main > .section:has(.cards):not(:has(.carousel)) > div::after {
    component alone) — not teaser groups (2 h2s) or in-block headings. */
 body.magazine-listing main .default-content-wrapper h2:only-of-type::after,
 body.adventures-listing main .default-content-wrapper h2:only-of-type::after,
-body.content-overview main .default-content-wrapper h2:only-of-type::after {
+body.content-overview main .default-content-wrapper h2:only-of-type::after,
+body.homepage main .default-content-wrapper h2:only-of-type::after {
   content: '';
   display: block;
   width: 84px;
