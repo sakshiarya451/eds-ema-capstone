@@ -95,7 +95,11 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 6px 12px;
+
+  /* Column gap keeps the 24x24px tap targets (see button below) from
+     overlapping: 10px visible-dot box + 16px gap = 26px pitch > 24px, so the
+     touch targets clear each other (a11y "target-size" spacing rule). */
+  gap: 6px 16px;
   margin: 0;
   padding: 0;
   background-color: transparent;
