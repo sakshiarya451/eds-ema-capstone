@@ -21,7 +21,7 @@ header .nav-utility-inner {
   /* WKND aligns the sign-in + language group not to the content-column edge
      but ~87px inside it (lang right edge ~1215 in a 1440 viewport → 225px
      gap). Extra right padding reproduces that inset. */
-  padding: 2px 160px 2px 14px;
+  padding: 2px 144px 2px 14px;
   display: flex;
   justify-content: flex-end;
 }
