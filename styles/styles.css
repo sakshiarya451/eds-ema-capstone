@@ -389,3 +389,13 @@ body.content-overview main .default-content-wrapper h2:only-of-type::after {
 body.content-overview main .default-content-wrapper p {
   font-size: var(--body-font-size-xs);
 }
+
+/* FAQ page: the h1 "FAQs" carries the same 84px x 2px yellow accent bar
+   (WKND). The heading sits inside the columns (faq) block's left column. */
+body.faq-page main .columns.faq h1::after {
+  content: '';
+  display: block;
+  width: 84px;
+  margin-top: 8px;
+  border-bottom: 2px solid var(--accent-color);
+}

@@ -292,4 +292,55 @@
   color: #696969;
 }
 
+/* --- FAQ page body (columns.faq) ---------------------------------------
+   WKND FAQs: a wide left column (title, intro image, intro copy, accordion)
+   + a narrow right sidebar ("Need more help?"). Measured from wknd.site:
+   left 776px, right 291px, ~111px gutter, columns top-aligned. */
+.columns.faq > div {
+  gap: 111px;
+  align-items: start;
+}
+
+.columns.faq > div > div:first-child {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 776px;
+}
+
+.columns.faq > div > div:last-child {
+  flex: 0 0 291px;
+}
+
+/* Intro image spans the left column width. */
+.columns.faq > div > div:first-child img {
+  width: 100%;
+  display: block;
+  margin: 8px 0;
+}
+
+/* Intro paragraph: WKND airy 18px/45px lead copy. */
+.columns.faq > div > div:first-child > p {
+  margin: 0 0 24px;
+  font-size: var(--body-font-size-m);
+  line-height: 2.5;
+}
+
+/* Sidebar "Need more help?" heading + contact copy. */
+.columns.faq > div > div:last-child hr {
+  margin: 0 0 24px;
+  border: 0;
+  border-top: 1px solid var(--light-color);
+}
+
+.columns.faq > div > div:last-child h3 {
+  margin: 0 0 12px;
+  font-size: var(--heading-font-size-l);
+}
+
+.columns.faq > div > div:last-child p {
+  margin: 0;
+  font-size: var(--body-font-size-xs);
+  line-height: 1.75;
+}
+
 /* stylelint-enable no-descending-specificity */

@@ -1,0 +1,60 @@
+/*
+ * Accordion Block — based on the AEM Block Collection accordion, restyled to
+ * WKND's FAQ look: questions in uppercase Source Sans 16/600, a thin grey
+ * divider under each item (no full border box), a +/- chevron on the right,
+ * and 14px answer copy. Items are flush (no gap), matching wknd.site.
+ */
+
+.accordion .accordion-item {
+  border-bottom: 2px solid var(--light-color);
+}
+
+.accordion .accordion-item + .accordion-item {
+  margin-top: 0;
+}
+
+/* Question row (summary) */
+.accordion .accordion-item summary {
+  position: relative;
+  padding: 14px 46px 14px 0;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+.accordion .accordion-item summary::-webkit-details-marker {
+  display: none;
+}
+
+/* +/- chevron on the right */
+.accordion .accordion-item summary::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%) rotate(135deg);
+  width: 8px;
+  height: 8px;
+  border: solid currentcolor;
+  border-width: 2px 2px 0 0;
+  transition: transform 0.2s;
+}
+
+.accordion .accordion-item[open] summary::after {
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+/* Answer body */
+.accordion .accordion-item .accordion-item-body {
+  padding: 0 0 14px;
+}
+
+.accordion .accordion-item .accordion-item-body p {
+  margin: 0 0 0.8em;
+  font-size: var(--body-font-size-xs);
+  line-height: 1.75;
+}
