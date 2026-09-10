@@ -143,10 +143,12 @@ async function decorateAdventures(block) {
 }
 
 /**
- * Dynamic magazine listing: fetch query-index.json, keep magazine-article
+ * Dynamic magazine-article cards: fetch query-index.json, keep magazine-article
  * pages, sort newest-first (lastModified desc), render as cards. No tabs.
+ * @param {Element} block the cards block
+ * @param {number} [limit] optional max number of cards (undefined = all)
  */
-async function decorateMagazine(block) {
+async function decorateMagazine(block, limit) {
   block.textContent = '';
 
   let rows = [];
@@ -161,6 +163,8 @@ async function decorateMagazine(block) {
   } catch (e) {
     rows = [];
   }
+
+  if (typeof limit === 'number') rows = rows.slice(0, limit);
 
   const ul = document.createElement('ul');
   rows.forEach((row) => ul.append(buildCard(row)));
@@ -241,9 +245,15 @@ export default function decorate(block) {
     return;
   }
 
-  // Dynamic variant: magazine listing (newest-first article cards).
+  // Dynamic variant: magazine listing (newest-first article cards, all of them).
   if (block.classList.contains('magazine')) {
     decorateMagazine(block);
+    return;
+  }
+
+  // Dynamic variant: homepage "Recent Articles" — newest 4 magazine articles.
+  if (block.classList.contains('articles')) {
+    decorateMagazine(block, 4);
     return;
   }
 
