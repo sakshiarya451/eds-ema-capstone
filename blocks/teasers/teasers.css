@@ -1,0 +1,78 @@
+/* WKND "Members Only" locked teasers — 2-up on desktop. Each card: a lock
+   badge, uppercase title, grey uppercase description, a grey "Read More"
+   button, then a large image below. Measured from wknd.site/us/en/magazine. */
+.teasers ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+@media (width >= 700px) {
+  .teasers ul {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+}
+
+.teasers .teasers-card {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.teasers .teasers-card-body {
+  order: 1;
+}
+
+.teasers .teasers-card-image {
+  order: 2;
+  margin-top: 16px;
+}
+
+/* Lock badge above the title (WKND marks secure teasers with a lock glyph). */
+.teasers .teasers-card-lock {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.teasers .teasers-card-lock svg {
+  width: 24px;
+  height: 24px;
+  fill: var(--text-color);
+}
+
+.teasers .teasers-card-body h2 {
+  margin: 0 0 9px;
+  font-family: var(--body-font-family);
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+.teasers .teasers-card-body p {
+  margin: 0 0 14px;
+  font-size: var(--body-font-size-xs);
+  text-transform: uppercase;
+  color: #696969;
+}
+
+/* Grey "Read More" button (non-navigating — content is member-gated on WKND). */
+.teasers .teasers-card-cta {
+  display: inline-block;
+  padding: 7px 14px;
+  background-color: var(--light-color);
+  color: #696969;
+  font-size: var(--body-font-size-xs);
+  text-transform: uppercase;
+}
+
+.teasers .teasers-card-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}

@@ -1,26 +1,8 @@
-/* eslint-disable */
 var CustomImportScript = (() => {
   var __defProp = Object.defineProperty;
-  var __defProps = Object.defineProperties;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-  var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
   var __getOwnPropNames = Object.getOwnPropertyNames;
-  var __getOwnPropSymbols = Object.getOwnPropertySymbols;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
-  var __propIsEnum = Object.prototype.propertyIsEnumerable;
-  var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-  var __spreadValues = (a, b) => {
-    for (var prop in b || (b = {}))
-      if (__hasOwnProp.call(b, prop))
-        __defNormalProp(a, prop, b[prop]);
-    if (__getOwnPropSymbols)
-      for (var prop of __getOwnPropSymbols(b)) {
-        if (__propIsEnum.call(b, prop))
-          __defNormalProp(a, prop, b[prop]);
-      }
-    return a;
-  };
-  var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
   var __export = (target, all) => {
     for (var name in all)
       __defProp(target, name, { get: all[name], enumerable: true });
@@ -91,7 +73,7 @@ var CustomImportScript = (() => {
   };
   var transformers = [transform];
   function executeTransformers(hookName, element, payload) {
-    const enhancedPayload = __spreadProps(__spreadValues({}, payload), { template: PAGE_TEMPLATE });
+    const enhancedPayload = { ...payload, template: PAGE_TEMPLATE };
     transformers.forEach((transformerFn) => {
       try {
         transformerFn.call(null, hookName, element, enhancedPayload);
@@ -100,26 +82,37 @@ var CustomImportScript = (() => {
       }
     });
   }
-  function buildTextTeaser(document, teaserEl) {
+  function buildTeaserRow(document, teaserEl) {
     const h2 = teaserEl.querySelector(".cmp-teaser__title, h2, h3");
     const desc = teaserEl.querySelector('.cmp-teaser__description, [class*="description"], p');
-    const cta = teaserEl.querySelector(".cmp-teaser__action-link, a");
-    const out = [];
+    const cta = teaserEl.querySelector(".cmp-teaser__action-link, .cmp-teaser__action-container, a");
+    const body = [];
     if (h2 && h2.textContent.trim()) {
       const h = document.createElement("h2");
       h.textContent = h2.textContent.trim();
-      out.push(h);
+      body.push(h);
     }
     if (desc && desc.textContent.trim()) {
       const p = document.createElement("p");
       p.textContent = desc.textContent.trim();
-      out.push(p);
+      body.push(p);
     }
     const ctaText = cta && cta.textContent.trim() || "Read More";
     const p2 = document.createElement("p");
     p2.textContent = ctaText;
-    out.push(p2);
-    return out;
+    body.push(p2);
+    let img = "";
+    const cmpImg = teaserEl.querySelector(".cmp-image[data-cmp-src], [data-cmp-src]");
+    const rawImg = teaserEl.querySelector("img");
+    if (rawImg) {
+      img = rawImg.cloneNode(true);
+      if (cmpImg && cmpImg.getAttribute("data-cmp-src")) {
+        const hi = cmpImg.getAttribute("data-cmp-src").replace("{.width}", ".1600");
+        img.setAttribute("src", hi);
+        img.removeAttribute("srcset");
+      }
+    }
+    return [body, img];
   }
   var import_magazine_listing_default = {
     transform: (payload) => {
@@ -203,9 +196,14 @@ var CustomImportScript = (() => {
         main.appendChild(p);
       }
       addHr();
-      memberTeasers.forEach((t) => {
-        buildTextTeaser(document, t).forEach((node) => main.appendChild(node));
-      });
+      const teaserRows = memberTeasers.map((t) => buildTeaserRow(document, t)).filter((row) => row[0].length);
+      if (teaserRows.length) {
+        const teasersBlock = WebImporter.Blocks.createBlock(document, {
+          name: "teasers (members)",
+          cells: teaserRows
+        });
+        main.appendChild(teasersBlock);
+      }
       executeTransformers("afterTransform", main, payload);
       const hrEnd = document.createElement("hr");
       main.appendChild(hrEnd);
@@ -230,7 +228,7 @@ var CustomImportScript = (() => {
       return [{
         element: main,
         path,
-        report: { title: document.title, template: PAGE_TEMPLATE.name, blocks: ["columns (featured)", "cards (magazine)"] }
+        report: { title: document.title, template: PAGE_TEMPLATE.name, blocks: ["columns (featured)", "cards (magazine)", "teasers (members)"] }
       }];
     }
   };
