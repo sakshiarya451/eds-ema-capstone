@@ -17,7 +17,8 @@ const parsers = {};
 //  5. h2 "Members Only" + text ("Sign in to un-lock…")
 //  6. separator (hr)
 //  7. Two locked member teasers (Alaskan Adventure, Fly Fishing the Amazon) —
-//     no image/link in source; migrated as static text teasers.
+//     title + description + "Read More" + teaser image → teasers (members)
+//     block (2-up cards with lock badge + grey CTA, matching WKND).
 const PAGE_TEMPLATE = {
   name: 'magazine-listing',
   description: 'Magazine listing: title, featured article, dynamic article grid, members-only section',
@@ -38,28 +39,48 @@ function executeTransformers(hookName, element, payload) {
   });
 }
 
-/** Text-only teaser (locked member content): h2 + description + "Read More". */
-function buildTextTeaser(document, teaserEl) {
+/**
+ * Locked member teaser → a `teasers (members)` block row: [body | image].
+ * body = title (h2) + description + "Read More" label; image = the teaser's
+ * hi-res picture. The teasers block renders the lock badge + grey CTA and the
+ * 2-up card layout. Content is member-gated on WKND (no working href), so the
+ * CTA is a non-navigating label.
+ */
+function buildTeaserRow(document, teaserEl) {
   const h2 = teaserEl.querySelector('.cmp-teaser__title, h2, h3');
   const desc = teaserEl.querySelector('.cmp-teaser__description, [class*="description"], p');
-  const cta = teaserEl.querySelector('.cmp-teaser__action-link, a');
-  const out = [];
+  const cta = teaserEl.querySelector('.cmp-teaser__action-link, .cmp-teaser__action-container, a');
+
+  const body = [];
   if (h2 && h2.textContent.trim()) {
     const h = document.createElement('h2');
     h.textContent = h2.textContent.trim();
-    out.push(h);
+    body.push(h);
   }
   if (desc && desc.textContent.trim()) {
     const p = document.createElement('p');
     p.textContent = desc.textContent.trim();
-    out.push(p);
+    body.push(p);
   }
-  // "Read More" label — kept as plain text (source has no working href).
   const ctaText = (cta && cta.textContent.trim()) || 'Read More';
   const p2 = document.createElement('p');
   p2.textContent = ctaText;
-  out.push(p2);
-  return out;
+  body.push(p2);
+
+  // Prefer the hi-res image from the core-image data-cmp-src; fall back to <img>.
+  let img = '';
+  const cmpImg = teaserEl.querySelector('.cmp-image[data-cmp-src], [data-cmp-src]');
+  const rawImg = teaserEl.querySelector('img');
+  if (rawImg) {
+    img = rawImg.cloneNode(true);
+    if (cmpImg && cmpImg.getAttribute('data-cmp-src')) {
+      const hi = cmpImg.getAttribute('data-cmp-src').replace('{.width}', '.1600');
+      img.setAttribute('src', hi);
+      img.removeAttribute('srcset');
+    }
+  }
+
+  return [body, img];
 }
 
 export default {
@@ -174,10 +195,17 @@ export default {
     // Section 6: separator.
     addHr();
 
-    // Section 7: the two locked member teasers as static text teasers.
-    memberTeasers.forEach((t) => {
-      buildTextTeaser(document, t).forEach((node) => main.appendChild(node));
-    });
+    // Section 7: the two locked member teasers → teasers (members) block.
+    const teaserRows = memberTeasers
+      .map((t) => buildTeaserRow(document, t))
+      .filter((row) => row[0].length); // skip empty
+    if (teaserRows.length) {
+      const teasersBlock = WebImporter.Blocks.createBlock(document, {
+        name: 'teasers (members)',
+        cells: teaserRows,
+      });
+      main.appendChild(teasersBlock);
+    }
 
     // afterTransform (CTA wrapping etc.) + metadata.
     executeTransformers('afterTransform', main, payload);
@@ -209,7 +237,7 @@ export default {
     return [{
       element: main,
       path,
-      report: { title: document.title, template: PAGE_TEMPLATE.name, blocks: ['columns (featured)', 'cards (magazine)'] },
+      report: { title: document.title, template: PAGE_TEMPLATE.name, blocks: ['columns (featured)', 'cards (magazine)', 'teasers (members)'] },
     }];
   },
 };
