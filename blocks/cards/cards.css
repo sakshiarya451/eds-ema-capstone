@@ -251,6 +251,6 @@
    top of the grid; the extra height fills the block below them. Placed last so
    it follows the variant rules (avoids descending-specificity ordering). */
 body.homepage .cards:not(.adventures, .magazine, .contributors) > ul {
-  height: 1136px;
+  height: 330px;
   align-content: start;
 }
