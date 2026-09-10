@@ -119,10 +119,9 @@
 
 /* --- Homepage "Next Adventures" hero (plain .columns) ------------------
    WKND renders the Climbing New Zealand block as a FULL-WIDTH 640px image with
-   a white content box (heading + copy + CTA) anchored toward the BOTTOM of the
-   image — the box top sits ~72% down the image and its bottom overlaps ~40px
-   below the image's bottom edge, the same low-anchored position as the carousel
-   hero teaser. The 1136px white panel has 28px left/right padding. Content
+   a white content box (heading + copy + CTA) overlapping the image bottom. The
+   content box is styled EXACTLY like the carousel "WKND Adventures" teaser:
+   1192px wide, 188.5px tall, 0 28px padding, margin 0 auto (centered). Content
    order in source is [text, image]; the image fills the block behind the box.
    Scoped to body.homepage plain columns so featured/article/intro/faq are
    untouched. */
@@ -151,15 +150,17 @@ body.homepage .columns:not(.featured, .intro, .article, .faq) > div > div:last-c
   object-fit: cover;
 }
 
-/* text cell (1st cell): 1136px white panel, anchored to the bottom and pulled
-   down so it overlaps the image's bottom edge (WKND: box bottom ~40px below). */
+/* text cell (1st cell): white panel matching the carousel "WKND Adventures"
+   content box — 1192px wide, 188.5px tall, 0 28px padding, margin 0 auto. */
 body.homepage .columns:not(.featured, .intro, .article, .faq) > div > div:first-child {
   position: relative;
   z-index: 1;
   box-sizing: border-box;
-  width: 1136px;
+  width: 1192px;
   max-width: 100%;
-  padding: 32px 28px;
+  height: 188.5px;
+  margin: 0 auto;
+  padding: 0 28px;
   background-color: var(--background-color);
 }
 

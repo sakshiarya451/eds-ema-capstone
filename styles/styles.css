@@ -390,13 +390,25 @@ main > .section > .columns-wrapper:has(.columns:not(.featured, .article, .intro,
   padding: 0;
 }
 
-/* WKND homepage: remove the top/bottom margin on the card-section button
-   wrapper (All Articles / All Trips) so it sits flush — no separator line is
-   drawn after the buttons / before "Next Adventures"; the card grid's fixed
-   height already provides the surrounding spacing. */
+/* WKND homepage: the All Articles / All Trips button wrapper sits flush (no
+   own top/bottom margin). */
 body.homepage main > .section:has(.cards) p.button-wrapper {
   margin-top: 0;
   margin-bottom: 0;
+}
+
+/* WKND homepage: after the All Articles / All Trips button each card section
+   closes with a separator BLOCK — 130px tall with a thin grey rule centered
+   vertically (WKND: .separator 130px, 1px #ebebeb hairline in the middle). The
+   line is drawn as a centered 1px background stripe so it sits mid-block. */
+body.homepage main > .section:has(.cards):not(:has(.carousel)) > div:last-child::after {
+  content: '';
+  display: block;
+  height: 130px;
+  background-image: linear-gradient(var(--light-color), var(--light-color));
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 1px;
 }
 
 /* WKND listing pages: standalone section-title h2s get a short yellow accent
