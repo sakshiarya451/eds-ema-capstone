@@ -55,8 +55,9 @@ header .nav-utility a img {
   vertical-align: middle;
 }
 
-/* Language selector (last utility link) carries a dropdown caret, like WKND. */
-header .nav-utility li:last-child a::after {
+/* Language selector trigger carries a dropdown caret, like WKND. Scoped to the
+   trigger's direct <a> so the locale links inside the panel don't get carets. */
+header .nav-lang > a::after {
   content: '';
   display: inline-block;
   width: 6px;
@@ -65,6 +66,103 @@ header .nav-utility li:last-child a::after {
   border: solid #ebebeb;
   border-width: 0 2px 2px 0;
   transform: translateY(-2px) rotate(45deg);
+}
+
+/* caret flips up when the switcher is open */
+header .nav-lang.nav-lang-open > a::after {
+  transform: translateY(2px) rotate(-135deg);
+}
+
+/* --- Language switcher dropdown --- */
+header .nav-lang {
+  position: relative;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+header .nav-lang > a {
+  cursor: pointer;
+}
+
+header .nav-lang-panel {
+  position: absolute;
+  top: calc(100% + 2px);
+  right: 0;
+  z-index: 20;
+  min-width: 240px;
+  background-color: #202020;
+  color: #ebebeb;
+  box-shadow: 0 6px 20px rgb(0 0 0 / 35%);
+}
+
+header .nav-lang-panel[hidden] {
+  display: none;
+}
+
+header .nav-lang-panel ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  text-transform: none;
+}
+
+header .nav-lang-country {
+  margin: 0;
+  padding: 14px 20px;
+  border-bottom: 1px solid #333;
+}
+
+header .nav-lang-country:last-child {
+  border-bottom: 0;
+}
+
+header .nav-lang-country-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+header .nav-lang-flag {
+  display: inline-flex;
+  line-height: 0;
+}
+
+header .nav-lang-flag svg {
+  width: 20px;
+  height: 14px;
+  display: block;
+}
+
+header .nav-lang-country-name {
+  font-size: var(--body-font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+header .nav-lang-options {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+header .nav-lang-options a:any-link {
+  color: #ebebeb;
+  text-decoration: none;
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+header .nav-lang-options a:hover,
+header .nav-lang-options a[aria-current='true'] {
+  text-decoration: underline;
+}
+
+header .nav-lang-sep {
+  color: #767676;
 }
 
 header nav {

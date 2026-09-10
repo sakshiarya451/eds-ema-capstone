@@ -108,6 +108,143 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   }
 }
 
+// Country → locale options for the language switcher (matches WKND). Each
+// locale links to /{lang}/{country}; these landing pages don't exist yet, so
+// they 404 by design — the switcher itself is the deliverable.
+// Minimal inline SVG flags (20x14) — recognizable band flags that render
+// consistently without relying on emoji fonts.
+const FLAGS = {
+  us: '<svg viewBox="0 0 20 14" width="20" height="14"><rect width="20" height="14" fill="#b22234"/><g fill="#fff"><rect y="2" width="20" height="2"/><rect y="6" width="20" height="2"/><rect y="10" width="20" height="2"/></g><rect width="9" height="8" fill="#3c3b6e"/></svg>',
+  ca: '<svg viewBox="0 0 20 14" width="20" height="14"><rect width="20" height="14" fill="#fff"/><rect width="5" height="14" fill="#d52b1e"/><rect x="15" width="5" height="14" fill="#d52b1e"/><rect x="9" y="4" width="2" height="6" fill="#d52b1e"/></svg>',
+  ch: '<svg viewBox="0 0 20 14" width="20" height="14"><rect width="20" height="14" fill="#d52b1e"/><rect x="8.5" y="3" width="3" height="8" fill="#fff"/><rect x="6" y="5.5" width="8" height="3" fill="#fff"/></svg>',
+  de: '<svg viewBox="0 0 20 14" width="20" height="14"><rect width="20" height="4.67" fill="#000"/><rect y="4.67" width="20" height="4.67" fill="#d00"/><rect y="9.33" width="20" height="4.67" fill="#ffce00"/></svg>',
+  fr: '<svg viewBox="0 0 20 14" width="20" height="14"><rect width="6.67" height="14" fill="#0055a4"/><rect x="6.67" width="6.67" height="14" fill="#fff"/><rect x="13.33" width="6.67" height="14" fill="#ef4135"/></svg>',
+  es: '<svg viewBox="0 0 20 14" width="20" height="14"><rect width="20" height="14" fill="#c60b1e"/><rect y="3.5" width="20" height="7" fill="#ffc400"/></svg>',
+  it: '<svg viewBox="0 0 20 14" width="20" height="14"><rect width="6.67" height="14" fill="#009246"/><rect x="6.67" width="6.67" height="14" fill="#fff"/><rect x="13.33" width="6.67" height="14" fill="#ce2b37"/></svg>',
+};
+
+const LOCALES = [
+  {
+    country: 'United States',
+    flag: FLAGS.us,
+    options: [{ label: 'EN-US', path: '/us/en' }, { label: 'ES-US', path: '/us/es' }],
+  },
+  {
+    country: 'Canada',
+    flag: FLAGS.ca,
+    options: [{ label: 'EN-CA', path: '/ca/en' }, { label: 'FR-CA', path: '/ca/fr' }],
+  },
+  {
+    country: 'Switzerland',
+    flag: FLAGS.ch,
+    options: [{ label: 'DE-CH', path: '/ch/de' }, { label: 'FR-CH', path: '/ch/fr' }, { label: 'IT-CH', path: '/ch/it' }],
+  },
+  {
+    country: 'Germany',
+    flag: FLAGS.de,
+    options: [{ label: 'DE-DE', path: '/de/de' }],
+  },
+  {
+    country: 'France',
+    flag: FLAGS.fr,
+    options: [{ label: 'FR-FR', path: '/fr/fr' }],
+  },
+  {
+    country: 'Spain',
+    flag: FLAGS.es,
+    options: [{ label: 'ES-ES', path: '/es/es' }],
+  },
+  {
+    country: 'Italy',
+    flag: FLAGS.it,
+    options: [{ label: 'IT-IT', path: '/it/it' }],
+  },
+];
+
+/**
+ * Turns the "#lang-toggle" utility link into a language switcher: a toggle that
+ * opens a dropdown panel of country groups, each with clickable locale links
+ * (WKND-style). The active locale (EN-US) is marked current.
+ * @param {Element} navUtility The utility section element
+ */
+function decorateLangSwitcher(navUtility) {
+  const langItem = [...navUtility.querySelectorAll('li')]
+    .find((li) => li.querySelector('a[href*="lang"]'));
+  if (!langItem) return;
+  const trigger = langItem.querySelector('a');
+  if (!trigger) return;
+
+  langItem.classList.add('nav-lang');
+  trigger.setAttribute('href', '#lang-toggle');
+  trigger.setAttribute('role', 'button');
+  trigger.setAttribute('aria-haspopup', 'true');
+  trigger.setAttribute('aria-expanded', 'false');
+  trigger.setAttribute('aria-label', 'Select language');
+
+  // Build the dropdown panel.
+  const panel = document.createElement('div');
+  panel.className = 'nav-lang-panel';
+  panel.hidden = true;
+  const list = document.createElement('ul');
+  LOCALES.forEach(({ country, flag, options }) => {
+    const li = document.createElement('li');
+    li.className = 'nav-lang-country';
+
+    const head = document.createElement('div');
+    head.className = 'nav-lang-country-head';
+    const flagSpan = document.createElement('span');
+    flagSpan.className = 'nav-lang-flag';
+    flagSpan.setAttribute('aria-hidden', 'true');
+    flagSpan.innerHTML = flag;
+    const name = document.createElement('span');
+    name.className = 'nav-lang-country-name';
+    name.textContent = country.toUpperCase();
+    head.append(flagSpan, name);
+
+    const opts = document.createElement('div');
+    opts.className = 'nav-lang-options';
+    options.forEach((opt, i) => {
+      const a = document.createElement('a');
+      a.href = opt.path;
+      a.textContent = opt.label;
+      // Mark the site's current locale as active/current.
+      if (opt.path === '/us/en') a.setAttribute('aria-current', 'true');
+      opts.append(a);
+      if (i < options.length - 1) {
+        const sep = document.createElement('span');
+        sep.className = 'nav-lang-sep';
+        sep.setAttribute('aria-hidden', 'true');
+        sep.textContent = '|';
+        opts.append(sep);
+      }
+    });
+
+    li.append(head, opts);
+    list.append(li);
+  });
+  panel.append(list);
+  langItem.append(panel);
+
+  const setOpen = (open) => {
+    panel.hidden = !open;
+    trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    langItem.classList.toggle('nav-lang-open', open);
+  };
+
+  trigger.addEventListener('click', (e) => {
+    e.preventDefault();
+    setOpen(panel.hidden);
+  });
+
+  // Close on outside click or Escape.
+  document.addEventListener('click', (e) => {
+    if (!langItem.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Escape') setOpen(false);
+  });
+}
+
 /**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
@@ -207,6 +344,7 @@ export default async function decorate(block) {
 
   const navUtility = nav.querySelector('.nav-utility');
   if (navUtility) {
+    decorateLangSwitcher(navUtility);
     const topBar = document.createElement('div');
     topBar.className = 'nav-utility-bar';
     const topBarInner = document.createElement('div');
