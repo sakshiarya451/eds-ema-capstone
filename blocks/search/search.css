@@ -1,0 +1,39 @@
+/* Search results page. The block also carries the `.cards` class, so the
+   result grid + card styling comes from blocks/cards/cards.css. These rules
+   add the search heading/status/type-tag and a responsive column count. */
+.search.block {
+  padding: 24px 0 48px;
+}
+
+.search .search-heading {
+  margin: 0 0 8px;
+}
+
+.search .search-status {
+  margin: 0 0 32px;
+  color: var(--text-color);
+  font-size: var(--body-font-size-s);
+}
+
+/* Small uppercase content-type label above each result title. */
+.search .search-result-type {
+  margin: 0 0 4px;
+  font-size: var(--body-font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #767676;
+}
+
+/* Fewer columns on narrower viewports (the shared cards grid is 4-col and only
+   drops for the adventures/magazine variants, not plain .cards). */
+@media (width < 900px) {
+  .search.cards > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width < 600px) {
+  .search.cards > ul {
+    grid-template-columns: 1fr;
+  }
+}
