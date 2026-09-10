@@ -107,14 +107,21 @@
   z-index: 2;
 }
 
+/* The visible dot stays 10px (matches WKND), but the button carries a 24x24px
+   tap target via padding — the grey dot is painted only on the content box
+   (background-clip: content-box). Negative margins collapse the extra box back
+   out of the layout so the dots still sit tight together as before. This meets
+   the a11y "target-size" minimum (>=24px) without changing the visual design. */
 .carousel .carousel-slide-indicator button {
+  box-sizing: content-box;
   width: 10px;
   height: 10px;
-  margin: 0;
-  padding: 0;
+  padding: 7px;
+  margin: -7px;
   border: 0;
   border-radius: 50%;
   background-color: #c9c9c9;
+  background-clip: content-box;
   box-shadow: none;
   transition: background-color 0.2s;
 }
