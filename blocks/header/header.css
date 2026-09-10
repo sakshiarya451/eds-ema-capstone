@@ -88,7 +88,9 @@ header .nav-lang-panel {
   top: calc(100% + 2px);
   right: 0;
   z-index: 20;
-  min-width: 240px;
+
+  /* WKND panel width (measured: nav offsetWidth 194px). */
+  width: 194px;
   background-color: #202020;
   color: #ebebeb;
   box-shadow: 0 6px 20px rgb(0 0 0 / 35%);
@@ -106,10 +108,14 @@ header .nav-lang-panel ul {
   text-transform: none;
 }
 
+/* Each country section is 60px tall (matches WKND): 8px top + 15px bottom
+   padding + 1px divider, wrapping the flag/name head and the option row. */
 header .nav-lang-country {
+  box-sizing: border-box;
+  height: 60px;
   margin: 0;
-  padding: 14px 20px;
-  border-bottom: 1px solid #333;
+  padding: 8px 14px 15px;
+  border-bottom: 1px solid #696969;
 }
 
 header .nav-lang-country:last-child {
@@ -119,8 +125,8 @@ header .nav-lang-country:last-child {
 header .nav-lang-country-head {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 6px;
+  gap: 8px;
+  margin-bottom: 2px;
 }
 
 header .nav-lang-flag {
