@@ -37,6 +37,11 @@ export default async function decorate(block) {
     if (section) section.classList.add(c);
   });
 
+  // Keep the "Follow Us" heading an <h4> (WKND styling keys off the tag) but
+  // give it aria-level=2 so it doesn't skip a level after the page's content
+  // headings — satisfies the a11y "heading-order" rule on every page.
+  footer.querySelectorAll('.footer-social h4').forEach((h) => h.setAttribute('aria-level', '2'));
+
   // Replace social link labels with brand SVG icons (label kept as aria-label).
   const social = footer.querySelector('.footer-social');
   if (social) {

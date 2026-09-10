@@ -166,7 +166,21 @@ export default async function decorate(block) {
         <span class="nav-search-icon" aria-hidden="true"></span>
         <input type="search" name="q" aria-label="Search" placeholder="Search">
       `;
-      searchLink.closest('p, li')?.replaceWith(form);
+      // Replace the search link's wrapper with the form. If the link sat in a
+      // list item, don't leave a <form> as a bare child of <ul> (invalid list
+      // markup / a11y "list" failure): drop the whole <ul> when search is its
+      // only item, otherwise swap just the <li>'s contents.
+      const listItem = searchLink.closest('li');
+      if (listItem) {
+        const list = listItem.closest('ul, ol');
+        if (list && list.children.length === 1) {
+          list.replaceWith(form);
+        } else {
+          listItem.replaceChildren(form);
+        }
+      } else {
+        searchLink.closest('p')?.replaceWith(form);
+      }
       // if the link sat in a bare wrapper, ensure the form is in the tools section
       if (!navTools.contains(form)) navTools.append(form);
     }

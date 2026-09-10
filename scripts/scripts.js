@@ -143,6 +143,32 @@ function decorateButtons(main) {
 }
 
 /**
+ * Enforces a valid heading outline (no skipped levels) without changing the
+ * visible tag — so WKND's exact typographic styling (keyed off h1–h6) is
+ * preserved. Walks headings in document order and, whenever a heading would
+ * jump more than one level below the previous one, sets `aria-level` to clamp
+ * it to prev+1. This satisfies the a11y "heading-order" rule for authored
+ * content whose levels come from the source document (e.g. an h1 followed by
+ * an h5), which we can't otherwise relevel without re-authoring.
+ * @param {Element} scope The container to normalize
+ */
+function normalizeHeadingLevels(scope) {
+  const headings = [...scope.querySelectorAll('h1, h2, h3, h4, h5, h6')];
+  let prev = 0;
+  headings.forEach((h) => {
+    const natural = Number(h.tagName[1]);
+    let level = natural;
+    if (prev && natural > prev + 1) {
+      level = prev + 1;
+      h.setAttribute('aria-level', String(level));
+    } else if (h.hasAttribute('aria-level')) {
+      h.removeAttribute('aria-level');
+    }
+    prev = level;
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -153,6 +179,7 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   decorateButtons(main);
+  normalizeHeadingLevels(main);
 }
 
 /**
