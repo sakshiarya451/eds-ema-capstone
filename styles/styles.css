@@ -437,6 +437,7 @@ body.homepage main .default-content-wrapper h2:only-of-type::after {
    small (WKND: Source Sans 14px), unlike the default 18px body copy. */
 body.content-overview main .default-content-wrapper p {
   font-size: var(--body-font-size-xs);
+  padding-bottom: 22.5px;
 }
 
 /* FAQ page: the h1 "FAQs" carries the same 84px x 2px yellow accent bar
