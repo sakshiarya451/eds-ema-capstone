@@ -156,6 +156,10 @@ body.homepage .columns:not(.featured, .intro, .article, .faq) > div > div:first-
   position: relative;
   z-index: 1;
   box-sizing: border-box;
+
+  /* flex:0 0 auto stops the base ".columns > div > div { flex: 1 }" rule from
+     stretching the box to the full 1680px section width — keep it at 1192px. */
+  flex: 0 0 auto;
   width: 1192px;
   max-width: 100%;
   height: 188.5px;
