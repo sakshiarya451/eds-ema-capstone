@@ -216,11 +216,42 @@ header nav[aria-expanded='true'] {
     max-width: 1164px;
     height: auto;
     padding: 50px 14px;
+    transition: padding 0.25s ease;
   }
 
   header nav[aria-expanded='true'] {
     min-height: 0;
     overflow: visible;
+  }
+
+  /* --- Scroll shrink (matches WKND) ---
+     Smoothly collapse the dark utility bar and compact the main row + logo when
+     the page is scrolled; JS toggles .header-shrink on the header block. */
+  header .nav-utility-bar {
+    overflow: hidden;
+    transition: max-height 0.25s ease, padding 0.25s ease, opacity 0.2s ease;
+    max-height: 40px;
+  }
+
+  header nav .nav-brand img {
+    transition: width 0.25s ease, max-height 0.25s ease;
+  }
+
+  header.header-shrink .nav-utility-bar {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+  }
+
+  header.header-shrink nav {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  header.header-shrink nav .nav-brand img {
+    width: 96px;
+    max-height: 36px;
   }
 }
 

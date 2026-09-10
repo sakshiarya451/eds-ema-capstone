@@ -356,4 +356,30 @@ export default async function decorate(block) {
 
   navWrapper.append(nav);
   block.append(navWrapper);
+
+  // Shrink the sticky header on scroll (matches WKND): once the page is scrolled
+  // past a threshold the utility bar hides and the main row compacts; scrolling
+  // back to the top restores the full header. Desktop only (mobile nav differs).
+  // The CSS targets the <header class="header-wrapper"> element (the sticky
+  // ancestor), not the inner block, so toggle the class there.
+  const headerEl = block.closest('header') || block;
+  const SHRINK_ON = 80;
+  const SHRINK_OFF = 20;
+  let shrunk = false;
+  const updateShrink = () => {
+    if (!isDesktop.matches) {
+      if (shrunk) { headerEl.classList.remove('header-shrink'); shrunk = false; }
+      return;
+    }
+    const y = window.scrollY;
+    if (!shrunk && y > SHRINK_ON) {
+      headerEl.classList.add('header-shrink');
+      shrunk = true;
+    } else if (shrunk && y < SHRINK_OFF) {
+      headerEl.classList.remove('header-shrink');
+      shrunk = false;
+    }
+  };
+  window.addEventListener('scroll', updateShrink, { passive: true });
+  updateShrink();
 }
