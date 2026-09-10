@@ -118,26 +118,30 @@
 }
 
 /* --- Homepage "Next Adventures" hero (plain .columns) ------------------
-   WKND renders the Climbing New Zealand block as a FULL-WIDTH image (1200x640)
-   with a white content box (heading + copy + CTA). The box is a 1136px-wide
-   white panel centered VERTICALLY over the image (per request), with 28px of
-   left/right padding. Content order in source is [text, image]; the image is
-   positioned to fill the block and the box is centered on top of it. Scoped to
-   body.homepage plain columns so featured / article / intro / faq are safe. */
+   WKND renders the Climbing New Zealand block as a FULL-WIDTH 640px image with
+   a white content box (heading + copy + CTA) anchored toward the BOTTOM of the
+   image — the box top sits ~72% down the image and its bottom overlaps ~40px
+   below the image's bottom edge, the same low-anchored position as the carousel
+   hero teaser. The 1136px white panel has 28px left/right padding. Content
+   order in source is [text, image]; the image fills the block behind the box.
+   Scoped to body.homepage plain columns so featured/article/intro/faq are
+   untouched. */
 body.homepage .columns:not(.featured, .intro, .article, .faq) > div {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   position: relative;
-  min-height: 640px;
+  min-height: 680px;
   gap: 0;
 }
 
-/* image cell (2nd cell) fills the whole block as the background layer */
+/* image cell (2nd cell): 640px background layer at the TOP of the block, so the
+   white box can overlap its bottom edge (block is 680px = 640 image + 40 spill) */
 body.homepage .columns:not(.featured, .intro, .article, .faq) > div > div:last-child {
   position: absolute;
-  inset: 0;
+  inset: 0 0 auto;
   z-index: 0;
+  height: 640px;
 }
 
 body.homepage .columns:not(.featured, .intro, .article, .faq) > div > div:last-child img {
@@ -147,7 +151,8 @@ body.homepage .columns:not(.featured, .intro, .article, .faq) > div > div:last-c
   object-fit: cover;
 }
 
-/* text cell (1st cell): 1136px white panel, centered vertically over image */
+/* text cell (1st cell): 1136px white panel, anchored to the bottom and pulled
+   down so it overlaps the image's bottom edge (WKND: box bottom ~40px below). */
 body.homepage .columns:not(.featured, .intro, .article, .faq) > div > div:first-child {
   position: relative;
   z-index: 1;

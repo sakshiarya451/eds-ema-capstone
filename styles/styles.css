@@ -390,15 +390,12 @@ main > .section > .columns-wrapper:has(.columns:not(.featured, .article, .intro,
   padding: 0;
 }
 
-/* WKND homepage: a thin grey separator line closes the "Recent Articles" and
-   "Where do you want to go?" sections — ONLY beneath the All Articles / All
-   Trips button, which is the LAST child div of the card section (a lone
-   default-content-wrapper holding the button link). Matches WKND: 1px #ebebeb. */
-body.homepage main > .section:has(.cards):not(:has(.carousel)) > div:last-child::after {
-  content: '';
-  display: block;
-  margin-top: 40px;
-  border-bottom: 1px solid var(--light-color);
+/* WKND homepage: remove the top/bottom margin on the card-section button
+   wrapper (All Articles / All Trips) so it sits flush — the card grid's fixed
+   height already provides the surrounding spacing. */
+body.homepage main > .section:has(.cards) p.button-wrapper {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 /* WKND listing pages: standalone section-title h2s get a short yellow accent
