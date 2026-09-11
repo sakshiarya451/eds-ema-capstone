@@ -85,7 +85,9 @@ header .nav-lang > a {
 
 header .nav-lang-panel {
   position: absolute;
-  top: calc(100% + 2px);
+
+  /* WKND leaves a ~19px gap between the language toggle and the dropdown. */
+  top: calc(100% + 19px);
   right: 0;
   z-index: 20;
 
