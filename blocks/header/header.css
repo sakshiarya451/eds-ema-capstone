@@ -89,8 +89,8 @@ header .nav-lang-panel {
   right: 0;
   z-index: 20;
 
-  /* WKND panel width (measured: nav offsetWidth 194px). */
-  width: 194px;
+  /* WKND panel width (measured: visible dark box renders 360px wide). */
+  width: 360px;
   background-color: #202020;
   color: #ebebeb;
   box-shadow: 0 6px 20px rgb(0 0 0 / 35%);
